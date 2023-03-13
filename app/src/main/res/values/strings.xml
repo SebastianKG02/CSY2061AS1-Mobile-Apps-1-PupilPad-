@@ -1,0 +1,67 @@
+<resources>
+    <!-- APPLICATION SPECIFICS -->
+    <string name="app_name">PupilPad</string>
+    <string name="author">Sebastian Kamil Gluch</string>
+    <string name="version_long">V0.0.0</string>
+    <string name="build_date">21.02.2023</string>
+    <!-- UNIVERSITY ONLY -->
+    <string name="author_student_id">21414551</string>
+    <string name="university_long">The University of Northampton</string>
+    <string name="university_short">UON</string>
+    <string name="module_code">CSY2061</string>
+    <string name="module_long">Mobile Applications Development</string>
+    <string name="assessment_code">AS1</string>
+    <!-- LOGIN -->
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="requirements">A password should contain:\n -\tAt least 8 characters\n -\tAt least one uppercase character\n -tAt least one lowercase character\n -tAt least one number</string>
+    <!-- ROLE IDENTIFIERS -->
+    <string name="role_admin_long">Administrator</string>
+    <string name="role_admin_short">Admin</string>
+    <string name="role_mod_long">Moderator</string>
+    <string name="role_mod_short">Mod</string>
+    <string name="role_basic_long">Pupil</string>
+    <string name="role_basic_short">STU</string>
+    <string name="role_none_long">Excluded</string>
+    <string name="role_none_short">EXC</string>
+    <!-- EDUCATION LEVELS / KEY STAGES -->
+    <string name="ks_reception_long">Reception</string>
+    <string name="ks_reception_short">KS0</string>
+    <string name="ks_one_long">Key Stage 1</string>
+    <string name="ks_one_short">KS1</string>
+    <string name="ks_two_long">Key Stage 2</string>
+    <string name="ks_two_short">KS2</string>
+    <string name="ks_three_long">Key Stage 3</string>
+    <string name="ks_three_short">KS3</string>
+    <string name="ks_four_long">Key Stage 4 (GCSE)</string>
+    <string name="ks_four_short">KS4</string>
+    <string name="ks_five_long">Key Stage 5 (FE)</string>
+    <string name="ks_five_short">KS5</string>
+    <string name="ks_undergrad_long">Undergraduate (HE, UG)</string>
+    <string name="ks_undergrad_short">UG</string>
+    <string name="ks_postgrad_long">Postgraduate (HE, PG)</string>
+    <string name="ks_postgrad_short">PG</string>
+    <string name="ks_doctor_long">Doctorate (HE, DC)</string>
+    <string name="ks_doctor_short">DC</string>
+    <string name="ks_none_long">Guest</string>
+    <string name="ks_none_short">N/A</string>
+    <!-- SCHOOL YEARS -->
+    <string name="yr_reception">Year 0 (Reception)</string>
+    <string name="yr_year1">Year 1</string>
+    <string name="yr_year2">Year 2</string>
+    <string name="yr_year3">Year 3</string>
+    <string name="yr_year4">Year 4</string>
+    <string name="yr_year5">Year 5</string>
+    <string name="yr_year6">Year 6</string>
+    <string name="yr_year7">Year 7</string>
+    <string name="yr_year8">Year 8</string>
+    <string name="yr_year9">Year 9</string>
+    <string name="yr_year10">Year 10</string>
+    <string name="yr_year11">Year 11</string>
+    <string name="yr_year12">Year 12</string>
+    <string name="yr_year13">Year 13</string>
+    <string name="yr_undergrad">Undergrad / Bachelor\'s</string>
+    <string name="yr_postgrad">Postgrad / Master\'s</string>
+    <string name="yr_phd">Doctoral / PHD</string>
+    <!-- ROLE ABILITIES -->
+</resources>
