@@ -12,8 +12,13 @@
     <string name="module_long">Mobile Applications Development</string>
     <string name="assessment_code">AS1</string>
     <!-- LOGIN -->
+    <string name="login">Welcome to PupilPad!</string>
     <string name="username">Username</string>
+    <string name="ent_username">Enter Username...</string>
+    <string name="login_button">Log in</string>
+    <string name="forgot_password">Forgot Password?</string>
     <string name="password">Password</string>
+    <string name="ent_password">Enter Password...</string>
     <string name="requirements">A password should contain:\n -\tAt least 8 characters\n -\tAt least one uppercase character\n -tAt least one lowercase character\n -tAt least one number</string>
     <!-- ROLE IDENTIFIERS -->
     <string name="role_admin_long">Administrator</string>

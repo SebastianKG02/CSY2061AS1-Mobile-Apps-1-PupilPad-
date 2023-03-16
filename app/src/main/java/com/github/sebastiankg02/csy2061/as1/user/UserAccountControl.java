@@ -1,16 +1,27 @@
 package com.github.sebastiankg02.csy2061.as1.user;
 
+import android.app.Activity;
+import android.content.Context;
+import android.util.Log;
+
 import com.github.sebastiankg02.csy2061.as1.user.role.Role;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 /**
  * Broad manager for all users within the application.
@@ -23,22 +34,64 @@ import java.util.UUID;
 public class UserAccountControl {
 
     private static ArrayList<User> users;
-    private static JSONObject userJSON;
+    private static JSONObject userJSON = new JSONObject();
     private static User currentLoggedInUser;
     private static boolean _initComplete = false;
+    private static Activity mOwner;
+    private static String path;
 
-    public static void init(String userJSONPath) throws JSONException, IOException{
+    public static void init(String userJSONPath, Activity owner) throws JSONException, IOException{
         if(!_initComplete){
-            File f = new File(userJSONPath);
+            path = userJSONPath;
+            mOwner = owner;
+            File f = new File(mOwner.getFilesDir(), userJSONPath);
             users = new ArrayList<User>();
+            Log.d("UAC", "Initialising UAC");
 
             if(f.exists()){
-                userJSON = new JSONObject(userJSONPath);
+                try {
+                    FileInputStream fis = mOwner.openFileInput(f.getName());
+                    InputStreamReader inputStreamReader =
+                            new InputStreamReader(fis, StandardCharsets.UTF_8);
+                    StringBuilder stringBuilder = new StringBuilder();
+                    try (BufferedReader reader = new BufferedReader(inputStreamReader)) {
+                        String line = reader.readLine();
+                        while (line != null) {
+                            stringBuilder.append(line).append('\n');
+                            line = reader.readLine();
+                        }
+                    } catch (IOException e) {
+                        // Error occurred when opening raw file for reading.
+                    } finally {
+                        String contents = stringBuilder.toString();
+                        userJSON = new JSONObject(contents);
+                    }
+
+                    try {
+                        Log.d("UAC", "JSON found, loaded... \n" + userJSON.toString());
+                    } catch (Exception e){
+                        Log.w("UAC", "Error while loading existing user JSON, wiping and re-populating. \n" + e.getMessage());
+                        f.delete();
+                        f.createNewFile();
+                        saveJSON(false);
+                        Log.d("UAC", "JSON created. Contents: \n" + userJSON.toString());
+                    }
+                } catch (RuntimeException e){
+                    Log.w("UAC", "Error while loading existing user JSON, wiping and re-populating. \n" + e.getMessage());
+                    f.delete();
+                    f.createNewFile();
+                    populateUserJSON();
+                    saveJSON(false);
+                    Log.d("UAC", "JSON created. Contents: \n" + getUserJSON().toString());
+                }
+                Log.d("UAC", "JSON found, loaded... \n" + userJSON.toString());
                 _initComplete = true;
             } else {
+                Log.d("UAC", "JSON not found, creating new file...");
                 if(f.createNewFile()){
                     populateUserJSON();
-                    userJSON = getUserJSON();
+                    saveJSON(false);
+                    Log.d("UAC", "JSON created. Contents: \n" + userJSON.toString());
                     _initComplete = true;
                 } else {
                     throw new FileNotFoundException();
@@ -118,6 +171,7 @@ public class UserAccountControl {
         users.add(pupil3);
         users.add(pupil4);
         users.add(pupilBanned);
+        saveJSON(false);
     }
 
     private static JSONObject getUserJSON() throws JSONException {
@@ -127,6 +181,32 @@ public class UserAccountControl {
         }
 
         return output;
+    }
+
+    public static boolean saveJSON(boolean updateUserJSON){
+        if(updateUserJSON){
+            try {
+                userJSON = getUserJSON();
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        try {
+            File f = new File(mOwner.getFilesDir(), path);
+            f.delete();
+            FileOutputStream fos = new FileOutputStream(f);
+            fos.write(getUserJSON().toString().getBytes(StandardCharsets.UTF_8));
+            fos.flush();
+            fos.close();
+            return true;
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static boolean validateUserExistence(String username){
