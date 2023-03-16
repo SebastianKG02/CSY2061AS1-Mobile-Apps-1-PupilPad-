@@ -11,6 +11,8 @@
     <string name="module_code">CSY2061</string>
     <string name="module_long">Mobile Applications Development</string>
     <string name="assessment_code">AS1</string>
+    <!-- GENERAL UI -->
+    <string name="ok">Ok</string>
     <!-- LOGIN -->
     <string name="login">Welcome to PupilPad!</string>
     <string name="username">Username</string>
@@ -19,6 +21,9 @@
     <string name="forgot_password">Forgot Password?</string>
     <string name="password">Password</string>
     <string name="ent_password">Enter Password...</string>
+    <string name="login_success">Login Successful!</string>
+    <string name="login_failed">Login Failed.</string>
+    <string name="invalid_details">Invalid username or password.</string>
     <string name="requirements">A password should contain:\n -\tAt least 8 characters\n -\tAt least one uppercase character\n -tAt least one lowercase character\n -tAt least one number</string>
     <!-- ROLE IDENTIFIERS -->
     <string name="role_admin_long">Administrator</string>

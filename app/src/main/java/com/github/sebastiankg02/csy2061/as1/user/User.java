@@ -34,6 +34,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.role = r;
+        this.profile = new UserPersonalProfile();
     }
 
     public User(User other){
@@ -45,6 +46,7 @@ public class User {
         this.username = rawUser.getString("user");
         this.password = rawUser.getString("pass");
         this.role = Role.fromInt(rawUser.getInt("role"));
+        this.profile = new UserPersonalProfile(rawUser.getJSONObject("profile"));
     }
 
     public UUID getId(){
@@ -96,6 +98,13 @@ public class User {
         output.put("user", getUsername());
         output.put("pass", getPassword());
         output.put("role", Role.toInt(getRole()));
+
+        if(profile == null){
+            profile = new UserPersonalProfile();
+        }
+
+        output.put("profile", profile.toJSON());
+
         return output;
     }
 

@@ -20,6 +20,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.UUID;
 import java.util.logging.Logger;
 
@@ -48,7 +49,7 @@ public class UserAccountControl {
             users = new ArrayList<User>();
             Log.d("UAC", "Initialising UAC");
 
-            if(f.exists()){
+            if(f.exists() && f.length() > 0){
                 try {
                     FileInputStream fis = mOwner.openFileInput(f.getName());
                     InputStreamReader inputStreamReader =
@@ -65,6 +66,14 @@ public class UserAccountControl {
                     } finally {
                         String contents = stringBuilder.toString();
                         userJSON = new JSONObject(contents);
+                        if(userJSON.length() < 2){
+                            Log.w("UAC", "Error while loading existing user JSON, wiping and re-populating. Empty!");
+                            f.delete();
+                            f.createNewFile();
+                            populateUserJSON();
+                            saveJSON(false);
+                            Log.d("UAC", "JSON created. Contents: \n" + userJSON.toString());
+                        }
                     }
 
                     try {
@@ -73,6 +82,7 @@ public class UserAccountControl {
                         Log.w("UAC", "Error while loading existing user JSON, wiping and re-populating. \n" + e.getMessage());
                         f.delete();
                         f.createNewFile();
+                        populateUserJSON();
                         saveJSON(false);
                         Log.d("UAC", "JSON created. Contents: \n" + userJSON.toString());
                     }
@@ -88,9 +98,10 @@ public class UserAccountControl {
                 _initComplete = true;
             } else {
                 Log.d("UAC", "JSON not found, creating new file...");
+                f.delete();
                 if(f.createNewFile()){
                     populateUserJSON();
-                    saveJSON(false);
+                    saveJSON(true);
                     Log.d("UAC", "JSON created. Contents: \n" + userJSON.toString());
                     _initComplete = true;
                 } else {
@@ -98,6 +109,8 @@ public class UserAccountControl {
                 }
             }
         }
+
+        users = getUsersFromJSON();
     }
 
     private static void populateUserJSON(){
@@ -161,6 +174,7 @@ public class UserAccountControl {
                 Role.NONE
         );
 
+        users.clear();
         users.add(defaultAdministrator);
         users.add(teacher0);
         users.add(teacher1);
@@ -183,7 +197,24 @@ public class UserAccountControl {
         return output;
     }
 
+    private static ArrayList<User> getUsersFromJSON() throws JSONException {
+        ArrayList<User> output = new ArrayList<User>();
+        Iterator<String> jsonKeys = userJSON.keys();
+
+        while(jsonKeys.hasNext()){
+            String objectKey = jsonKeys.next();
+            Log.d("UAC", "Loading user [" + objectKey + "]");
+            output.add(new User(userJSON.getJSONObject(objectKey)));
+            Log.d("UAC", "Complete! Loaded: \n" + output.get(output.size()-1).toJSON().toString());
+        }
+
+        return output;
+    }
+
     public static boolean saveJSON(boolean updateUserJSON){
+        if(currentLoggedInUser != null) {
+            users.add(currentLoggedInUser);
+        }
         if(updateUserJSON){
             try {
                 userJSON = getUserJSON();
@@ -192,6 +223,8 @@ public class UserAccountControl {
             }
         }
 
+        Log.d("UAC", "Saving json: " + userJSON.toString());
+
         try {
             File f = new File(mOwner.getFilesDir(), path);
             f.delete();
@@ -199,6 +232,7 @@ public class UserAccountControl {
             fos.write(getUserJSON().toString().getBytes(StandardCharsets.UTF_8));
             fos.flush();
             fos.close();
+            users.remove(currentLoggedInUser);
             return true;
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -217,12 +251,20 @@ public class UserAccountControl {
         }
     }
 
-    public boolean login(String username, String password){
+    public static boolean login(String username, String password){
+        Log.i("UAC", "LoginAttempt [u: " + username + " & p: " +password + "]");
         if(validateUserExistence(username)){
+            Log.i("UAC", "User exists!");
             User u = getUser(username);
             if(u.getPassword().equals(password)){
+                Log.i("UAC", "Password correct!");
                 currentLoggedInUser = new User(u);
-                currentLoggedInUser.getProfile().setLastLogin(LocalDateTime.now());
+                users.remove(u);
+                if(currentLoggedInUser.getProfile() == null) {
+                } else {
+                    currentLoggedInUser.getProfile().setLastLogin(LocalDateTime.now());
+                }
+                saveJSON(true);
                 return true;
             } else {
                 return false;
@@ -243,10 +285,15 @@ public class UserAccountControl {
 
     public static User getUser(String username){
         for(User u: users){
+            Log.d("UAC", "Checking [" + username + "] against User[" + u.getUsername() + "]");
             if(u.getUsername().equals(username)){
                 return u;
             }
         }
         return null;
+    }
+
+    public static User getCurrentLoggedInUser(){
+        return currentLoggedInUser;
     }
 }
