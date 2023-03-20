@@ -11,8 +11,14 @@
     <string name="module_code">CSY2061</string>
     <string name="module_long">Mobile Applications Development</string>
     <string name="assessment_code">AS1</string>
-    <!-- GENERAL UI -->
-    <string name="ok">Ok</string>
+    <!-- APPS -->
+    <string name="quiz">Quiz Aoo</string>
+    <string name="notes">Notes App</string>
+    <string name="certs">My Certificates</string>
+    <string name="profile">User Profile</string>
+    <string name="classMgmt">Class Management</string>
+    <string name="appMgmt">App Administrator Tools</string>
+    <string name="exit">Exit App</string>
     <!-- LOGIN -->
     <string name="login">Welcome to PupilPad!</string>
     <string name="username">Username</string>
@@ -73,5 +79,18 @@
     <string name="yr_undergrad">Undergrad / Bachelor\'s</string>
     <string name="yr_postgrad">Postgrad / Master\'s</string>
     <string name="yr_phd">Doctoral / PHD</string>
+    <string name="title_activity_main_menu">MainMenuActivity</string>
     <!-- ROLE ABILITIES -->
+    <!-- UI Text -->
+    <string name="user_profile_usage_information">Here you can edit your personal information, such as name, birthdate e.t.c.\nPlease bare in mind that School administrators review all personal information changes.</string>
+    <string name="user_profile_save_info">Save Profile Information</string>
+    <string name="user_profile_full_name_field">\nFull Name:</string>
+    <string name="user_profile_birthdate_field">\n Birthdate:</string>
+    <string name="user_profile_current_pw_field">\nCurrent Password:</string>
+    <string name="user_profile_new_pw_field">\nNew Password:</string>
+    <string name="user_profile_new_pw_confirm_field">\nConfirm New Password:</string>
+    <string name="user_profile_new_pw_button">Set New Password</string>
+    <string name="back">Back</string>
+    <string name="ok">Ok</string>
+    <string name="cont">Continue</string>
 </resources>

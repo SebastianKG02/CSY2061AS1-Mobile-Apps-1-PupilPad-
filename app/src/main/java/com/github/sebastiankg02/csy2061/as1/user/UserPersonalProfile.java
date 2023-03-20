@@ -1,5 +1,7 @@
 package com.github.sebastiankg02.csy2061.as1.user;
 
+import android.util.Log;
+
 import com.github.sebastiankg02.csy2061.as1.user.classroom.KeyStage;
 import com.github.sebastiankg02.csy2061.as1.user.quiz.QuizQuestionType;
 
@@ -120,5 +122,18 @@ public class UserPersonalProfile {
         output.put("ks", stage.getEducationLevel());
         output.put("age", age);
         return output;
+    }
+
+    public boolean setName(String singleStringName){
+        try {
+            String[] output = singleStringName.trim().split(" ");
+            output[output.length - 1].trim();
+            this.name = output;
+        } catch (Exception e){
+            Log.e("UAC", "Error changing name. " + e.getMessage());
+            return false;
+        } finally {
+            return true;
+        }
     }
 }

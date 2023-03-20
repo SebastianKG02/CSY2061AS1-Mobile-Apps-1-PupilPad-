@@ -260,10 +260,11 @@ public class UserAccountControl {
                 Log.i("UAC", "Password correct!");
                 currentLoggedInUser = new User(u);
                 users.remove(u);
-                if(currentLoggedInUser.getProfile() == null) {
-                } else {
+
+                if(currentLoggedInUser.getProfile() != null) {
                     currentLoggedInUser.getProfile().setLastLogin(LocalDateTime.now());
                 }
+
                 saveJSON(true);
                 return true;
             } else {

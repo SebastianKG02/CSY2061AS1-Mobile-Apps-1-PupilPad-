@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:id="@+id/mainMenuMasterLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/userInfoContainer0"
+            android:name="com.github.sebastiankg02.csy2061.as1.fragments.UserInfoFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            tools:layout="@layout/fragment_user_info" />
+
+        <ImageButton
+            android:id="@+id/notesAppButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="100dp"
+            android:layout_marginVertical="5dp"
+            android:backgroundTint="#00BCD4"
+            android:contentDescription="@string/notes"
+            android:elevation="10dp"
+            android:padding="10dp"
+            app:srcCompat="@android:drawable/ic_menu_edit" />
+
+        <ImageButton
+            android:id="@+id/quizAppButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="100dp"
+            android:layout_marginVertical="5dp"
+            android:backgroundTint="#AA00FF"
+            android:contentDescription="@string/quiz"
+            android:elevation="10dp"
+            android:padding="10dp"
+            app:srcCompat="@android:drawable/ic_menu_mapmode" />
+
+        <ImageButton
+            android:id="@+id/certAppButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="100dp"
+            android:layout_marginVertical="5dp"
+            android:backgroundTint="#00AA00"
+            android:contentDescription="@string/certs"
+            android:elevation="10dp"
+            android:padding="10dp"
+            app:srcCompat="@android:drawable/btn_star_big_on" />
+
+        <ImageButton
+            android:id="@+id/profileAppButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="100dp"
+            android:layout_marginVertical="5dp"
+            android:backgroundTint="#AAFFFF"
+            android:contentDescription="@string/profile"
+            android:elevation="10dp"
+            android:padding="10dp"
+            app:srcCompat="@android:drawable/ic_menu_myplaces" />
+
+        <ImageButton
+            android:id="@+id/classMgmtButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="100dp"
+            android:layout_marginVertical="5dp"
+            android:backgroundTint="#AA3030"
+            android:contentDescription="@string/classMgmt"
+            android:elevation="10dp"
+            android:padding="10dp"
+            app:srcCompat="@android:drawable/btn_star" />
+
+        <ImageButton
+            android:id="@+id/adminAppButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="100dp"
+            android:layout_marginVertical="5dp"
+            android:backgroundTint="#ff0000"
+            android:contentDescription="@string/quiz"
+            android:elevation="10dp"
+            android:padding="10dp"
+            app:srcCompat="@android:drawable/ic_dialog_alert"/>
+
+        <ImageButton
+            android:id="@+id/exitButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="100dp"
+            android:layout_marginVertical="5dp"
+            android:backgroundTint="#0000FF"
+            android:contentDescription="@string/quiz"
+            android:elevation="10dp"
+            android:padding="10dp"
+            app:srcCompat="@android:drawable/ic_delete"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,88 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
 
-    <LinearLayout
+<androidx.fragment.app.FragmentContainerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/loginText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="175dp"
-            android:text="@string/login"
-            android:textAlignment="center"
-            android:textSize="28sp"
-            android:textStyle="bold" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/enterUsername"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/ent_username"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/usernameField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textShortMessage"
-                android:singleLine="true" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/enterPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/ent_password"
-            android:paddingLeft="25dp"
-            android:paddingTop="10dp"
-            android:paddingRight="25dp"
-            android:paddingBottom="10dp"
-            app:passwordToggleEnabled="true">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/passwordField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:singleLine="true" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:paddingLeft="100dp"
-            android:paddingRight="100dp"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="loginCheck"
-                android:text="@string/login_button"
-                android:textAlignment="center" />
-
-            <Button
-                android:id="@+id/password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/forgot_password"
-                android:textAlignment="center" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:name="com.github.sebastiankg02.csy2061.as1.fragments.LoginFragment"
+    tools:layout="@layout/fragment_login" />
