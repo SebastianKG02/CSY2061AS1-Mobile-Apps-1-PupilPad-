@@ -79,6 +79,17 @@ public class UserPersonalProfile {
         return this.birthdate;
     }
 
+    public String getBirthdateAsString() { return formatterDate.format(birthdate); }
+
+    public boolean setBirthdate(String birthdateRaw){
+        try {
+            this.birthdate = LocalDate.parse(birthdateRaw, formatterDate);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+    }
+
     public boolean isBirthday(){
         if(birthdate.getMonth().compareTo(LocalDate.now().getMonth()) == 0
            && birthdate.getDayOfMonth() == LocalDate.now().getDayOfMonth()){
@@ -135,5 +146,9 @@ public class UserPersonalProfile {
         } finally {
             return true;
         }
+    }
+
+    public void setName(String[] name){
+        this.name = name;
     }
 }

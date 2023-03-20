@@ -14,7 +14,7 @@ public class User {
     private String username;
     private String password;
     private Role role;
-    private UserPersonalProfile profile;
+    public static UserPersonalProfile profile;
 
     public static final char[] passwordUppercaseChars = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
     public static final char[] passwordLowercaseChars = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
@@ -22,23 +22,27 @@ public class User {
     public static final int passwordMinimumCharacters = 8;
 
     public User(){
-        this(UUID.randomUUID(), "", "", Role.NONE);
+        this(UUID.randomUUID(), "", "", Role.NONE, new UserPersonalProfile());
     }
 
-    public User(String username, String password, Role r){
-        this(UUID.randomUUID(), username, password, r);
+    public User(String username, String password, Role r, UserPersonalProfile upp){
+        this(UUID.randomUUID(), username, password, r, upp);
     }
 
-    public User(UUID uuid, String username, String password, Role r){
+    public User(UUID uuid, String username, String password, Role r, UserPersonalProfile upp){
         id = uuid;
         this.username = username;
         this.password = password;
         this.role = r;
-        this.profile = new UserPersonalProfile();
+        this.profile = upp;
+    }
+
+    public User(String username, String password, Role r){
+        this(UUID.randomUUID(), username, password, r, new UserPersonalProfile());
     }
 
     public User(User other){
-        this(other.id, other.username, other.password, other.role);
+        this(other.id, other.username, other.password, other.role, other.getProfile());
     }
 
     public User(JSONObject rawUser) throws JSONException {
@@ -81,6 +85,10 @@ public class User {
                 checkForCharacter(passwordToCheck, passwordNumbers),
                 (passwordToCheck.length() >= passwordMinimumCharacters)
         );
+    }
+
+    public boolean checkPasswordSimilarity(String passwordToCheck){
+        return this.password.equals(passwordToCheck);
     }
 
     private boolean checkForCharacter(String toCheck, char[] queryCharacters){

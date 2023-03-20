@@ -84,7 +84,9 @@
                     android:id="@+id/birthdateInputField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"/>
+                    android:editable="true"
+                    android:inputType="date"
+                    android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
@@ -124,7 +126,8 @@
                     android:id="@+id/currentPWInputField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"/>
+                    android:inputType="textPassword"
+                    android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
@@ -155,7 +158,8 @@
                     android:id="@+id/newPWInputField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"/>
+                    android:inputType="textPassword"
+                    android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
@@ -186,7 +190,8 @@
                     android:id="@+id/confirmPWInputField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"/>
+                    android:inputType="textPassword"
+                    android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>

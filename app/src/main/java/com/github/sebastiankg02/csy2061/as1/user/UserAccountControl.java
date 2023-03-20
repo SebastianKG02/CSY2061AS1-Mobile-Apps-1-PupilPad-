@@ -36,7 +36,7 @@ public class UserAccountControl {
 
     private static ArrayList<User> users;
     private static JSONObject userJSON = new JSONObject();
-    private static User currentLoggedInUser;
+    public static User currentLoggedInUser;
     private static boolean _initComplete = false;
     private static Activity mOwner;
     private static String path;
@@ -261,8 +261,8 @@ public class UserAccountControl {
                 currentLoggedInUser = new User(u);
                 users.remove(u);
 
-                if(currentLoggedInUser.getProfile() != null) {
-                    currentLoggedInUser.getProfile().setLastLogin(LocalDateTime.now());
+                if(currentLoggedInUser.profile != null) {
+                    currentLoggedInUser.profile.setLastLogin(LocalDateTime.now());
                 }
 
                 saveJSON(true);
@@ -294,7 +294,4 @@ public class UserAccountControl {
         return null;
     }
 
-    public static User getCurrentLoggedInUser(){
-        return currentLoggedInUser;
-    }
 }

@@ -92,5 +92,21 @@
     <string name="user_profile_new_pw_button">Set New Password</string>
     <string name="back">Back</string>
     <string name="ok">Ok</string>
-    <string name="cont">Continue</string>
+    <string name="contToMain">Continue</string>
+    <string name="user_profile_invalid_full_name_title">Invalid Full Name!</string>
+    <string name="user_profile_invalid_full_name_desc">There was an error while changing your full name. Please try again, or contact an administrator.</string>
+    <string name="user_profile_invalid_birthdate_title">Invalid Birthdate!</string>
+    <string name="user_profile_invalid_birthdate_desc">The birthdate you provided was invalid. Please use the \nDD-MM-YYYY\nformat.</string>
+    <string name="user_profile_edit_success">Profile changes saved successfully.</string>
+    <string name="user_profile_no_change">Full name or Birthdate either unchanged, or empty!</string>
+    <string name="user_password_current_pw_incorrect_title">Current password does not match!</string>
+    <string name="user_password_current_pw_incorrect_desc">The password you entered does not match the password on file.</string>
+    <string name="user_password_new_not_valid_title">New password is not valid!</string>
+    <string name="user_password_current_pw_invalid_title">Current password invalid!</string>
+    <string name="user_password_current_pw_invalid_desc">Please enter your current password.</string>
+    <string name="user_password_new_noconfirm_title">Could not confirm new password!</string>
+    <string name="user_password_new_noconfirm_desc">New password not confirmed, check if both passwords are exactly the same.</string>
+    <string name="user_password_new_nochange_title">Please choose a new password!</string>
+    <string name="user_password_new_nochange_desc">Your new password must be different to your existing password.</string>
+    <string name="user_password_success">Password changed successfully.</string>
 </resources>

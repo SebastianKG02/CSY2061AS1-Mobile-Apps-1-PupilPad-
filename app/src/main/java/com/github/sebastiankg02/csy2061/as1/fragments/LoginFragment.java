@@ -1,5 +1,7 @@
 package com.github.sebastiankg02.csy2061.as1.fragments;
 
+import static com.github.sebastiankg02.csy2061.as1.fragments.apps.AppHelper.createAlertDialog;
+
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -56,17 +58,17 @@ public class LoginFragment extends Fragment {
                 String username = usernameField.getText().toString();
                 String password = passwordField.getText().toString();
                 if(username.isEmpty() || password.isEmpty()){
-                    createAlertDialog(R.string.login_failed, R.string.invalid_details, R.string.ok);
+                    createFragmentAlertDialog(R.string.login_failed, R.string.invalid_details, R.string.ok);
                 } else {
                     if(UserAccountControl.login(username, password)){
-                        createAlertDialog(R.string.login_success, R.string.login_success, R.string.cont);
+                        createFragmentAlertDialog(R.string.login_success, R.string.login_success, R.string.contToMain);
                         try {
-                            Log.i("UAC", "Login success! \n" +UserAccountControl.getCurrentLoggedInUser().toJSON().toString());
+                            Log.i("UAC", "Login success! \n" +UserAccountControl.currentLoggedInUser.toJSON().toString());
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
                     } else {
-                        createAlertDialog(R.string.login_failed, R.string.invalid_details, R.string.ok);
+                        createFragmentAlertDialog(R.string.login_failed, R.string.invalid_details, R.string.ok);
                     }
                 }
             }
@@ -77,27 +79,10 @@ public class LoginFragment extends Fragment {
     public void onStop() {
         super.onStop();
         UserAccountControl.saveJSON(true);
+
     }
 
-    private void createAlertDialog(int title, int message, int okID){
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this.getContext());
-
-        alertBuilder.setTitle(title);
-        alertBuilder.setMessage(message);
-
-        alertBuilder.setPositiveButton(okID, new DialogInterface.OnClickListener(){
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if(okID == R.string.cont){
-                    FragmentManager manager = getActivity().getSupportFragmentManager();
-                    FragmentTransaction moveTransaction = manager.beginTransaction();
-                    moveTransaction.replace(R.id.mainContainer, MainMenuFragment.class, null);
-                    moveTransaction.commit();
-                }
-            }
-        });
-
-        AlertDialog dialog = alertBuilder.create();
-        dialog.show();
+    public void createFragmentAlertDialog(int title, int message, int okID){
+        createAlertDialog(this, title, message, okID);
     }
 }

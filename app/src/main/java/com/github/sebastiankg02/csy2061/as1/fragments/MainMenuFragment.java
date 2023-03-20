@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import androidx.fragment.app.Fragment;
 
 import com.github.sebastiankg02.csy2061.as1.R;
+import com.github.sebastiankg02.csy2061.as1.fragments.apps.AppHelper;
+import com.github.sebastiankg02.csy2061.as1.fragments.apps.UserProfileAppFragment;
 import com.github.sebastiankg02.csy2061.as1.user.UserAccountControl;
 
 public class MainMenuFragment extends Fragment {
@@ -46,13 +48,13 @@ public class MainMenuFragment extends Fragment {
         exitButton = (ImageButton) this.getActivity().findViewById(R.id.exitButton);
 
         //If user is less than ADMINISTRATOR, remove admin button access
-        if(UserAccountControl.getCurrentLoggedInUser().getRole().getAccessLevel() < 3){
+        if(UserAccountControl.currentLoggedInUser.getRole().getAccessLevel() < 3){
             masterLayout.removeView((View) adminButton);
             //If user is less than MODERATOR, remove class management button access
-            if(UserAccountControl.getCurrentLoggedInUser().getRole().getAccessLevel() < 2){
+            if(UserAccountControl.currentLoggedInUser.getRole().getAccessLevel() < 2){
                 masterLayout.removeView((View) classMgmtButton);
                 //If user is less than USER, remove all but profile and exit buttons
-                if(UserAccountControl.getCurrentLoggedInUser().getRole().getAccessLevel() < 1){
+                if(UserAccountControl.currentLoggedInUser.getRole().getAccessLevel() < 1){
                     masterLayout.removeView((View) notesButton);
                     masterLayout.removeView((View) quizButton);
                     masterLayout.removeView((View) certsButton);
@@ -67,6 +69,21 @@ public class MainMenuFragment extends Fragment {
                 getActivity().finish();
             }
         });
+
+        profileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppHelper.moveToFragment(getThis(), UserProfileAppFragment.class, null);
+            }
+        });
+    }
+
+    private MainMenuFragment getThis(){
+        return this;
+    }
+
+    public void appBack() {
+        AppHelper.back(this);
     }
 
 }
