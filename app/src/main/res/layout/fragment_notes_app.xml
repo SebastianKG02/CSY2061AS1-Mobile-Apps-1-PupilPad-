@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:id="@+id/masterNotesLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/userInfoContainer2"
+            android:name="com.github.sebastiankg02.csy2061.as1.fragments.UserInfoFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/fragment_user_info"/>
+
+        <LinearLayout
+            android:id="@+id/notesAppLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/notesAppRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="128" />
+
+            <Button
+                android:id="@+id/newFileButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="25dp"
+                android:layout_weight="0"
+                android:text="@string/notes_app_new_file" />
+
+            <Button
+                android:id="@+id/previousFolderButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_weight="0"
+                android:text="@string/notes_app_back_dir" />
+
+            <Button
+                android:id="@+id/notesAppExit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginBottom="25dp"
+                android:layout_weight="0"
+                android:text="@string/back_menu" />
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

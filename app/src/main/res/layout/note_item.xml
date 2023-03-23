@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/noteItemLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/notes_item_border">
+
+    <ImageView
+        android:id="@+id/noteIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        app:srcCompat="@android:drawable/ic_input_get" />
+
+    <LinearLayout
+        android:id="@+id/fileAttributeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/itemDisplayName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ITEM DISPLAY NAME"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/itemFileName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="FILE NAME (CREATION DATE)"
+            android:textStyle="italic" />
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/deleteItemButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:cropToPadding="false"
+        app:srcCompat="@android:drawable/ic_delete" />
+
+</LinearLayout>

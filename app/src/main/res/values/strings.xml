@@ -91,6 +91,7 @@
     <string name="user_profile_new_pw_confirm_field">\nConfirm New Password:</string>
     <string name="user_profile_new_pw_button">Set New Password</string>
     <string name="back">Back</string>
+    <string name="back_menu">Back to menu</string>
     <string name="ok">Ok</string>
     <string name="contToMain">Continue</string>
     <string name="user_profile_invalid_full_name_title">Invalid Full Name!</string>
@@ -109,4 +110,24 @@
     <string name="user_password_new_nochange_title">Please choose a new password!</string>
     <string name="user_password_new_nochange_desc">Your new password must be different to your existing password.</string>
     <string name="user_password_success">Password changed successfully.</string>
+    <string name="delete_file_title">Confirm File Delete</string>
+    <string name="delete_file_desc">This will permanently delete the file. \n\nAre you sure you want to do this?</string>
+    <string name="delete_file_confirm">Delete Anyway</string>
+    <string name="delete_file_cancel">Cancel</string>
+    <string name="delete_file_complete">File successfully deleted.</string>
+    <string name="delete_file_error">File could not be deleted. Please try again.</string>
+    <string name="delete_file_cancel_complete">File not deleted.</string>
+    <string name="notes_app_new_file">Create new file</string>
+    <string name="notes_app_new_folder">Create new folder</string>
+    <string name="notes_app_back_dir">Back to previous folder</string>
+    <string name="notes_app_new_folder_name">Folder name</string>
+    <string name="notes_app_new_file_name">File Name</string>
+    <string name="notes_app_new_file_dp_name">Display Name (Optional)</string>
+    <string name="notes_app_new_file_title">Title (Optional)</string>
+    <string name="notes_app_new_file_success">New file created!</string>
+    <string name="notes_app_new_file_error">Could not make new file.</string>
+    <string name="notes_app_new_file_cancel">File creation cancelled.</string>
+    <string name="notes_app_new_folder_success">New folder created!</string>
+    <string name="notes_app_new_folder_error">Could not make new folder.</string>
+    <string name="notes_app_new_folder_cancel">Folder creation cancelled.</string>
 </resources>

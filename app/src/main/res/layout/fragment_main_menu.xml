@@ -20,7 +20,6 @@
             android:name="com.github.sebastiankg02.csy2061.as1.fragments.UserInfoFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             tools:layout="@layout/fragment_user_info" />
 
         <ImageButton

@@ -2,8 +2,6 @@ package com.github.sebastiankg02.csy2061.as1.user.role;
 
 import com.github.sebastiankg02.csy2061.as1.R;
 
-import java.util.UUID;
-
 public enum Role {
     ADMINISTRATOR(3,
             R.string.role_admin_long,

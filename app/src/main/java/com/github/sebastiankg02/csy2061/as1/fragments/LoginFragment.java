@@ -2,16 +2,12 @@ package com.github.sebastiankg02.csy2061.as1.fragments;
 
 import static com.github.sebastiankg02.csy2061.as1.fragments.apps.AppHelper.createAlertDialog;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.github.sebastiankg02.csy2061.as1.R;
 import com.github.sebastiankg02.csy2061.as1.user.UserAccountControl;
@@ -36,7 +32,7 @@ public class LoginFragment extends Fragment {
 
         Log.w("LOGIN", "Loading");
         try {
-            UserAccountControl.init("/u.json", this.getActivity());
+            UserAccountControl.init("u.json", this.getActivity());
         } catch (JSONException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {

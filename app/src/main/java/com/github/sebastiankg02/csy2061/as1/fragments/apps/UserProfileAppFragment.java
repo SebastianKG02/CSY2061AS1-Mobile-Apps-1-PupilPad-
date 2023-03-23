@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -15,8 +16,6 @@ import com.github.sebastiankg02.csy2061.as1.user.User;
 import com.github.sebastiankg02.csy2061.as1.user.UserAccountControl;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
-
-import org.w3c.dom.Text;
 
 public class UserProfileAppFragment extends Fragment {
 
@@ -64,14 +63,14 @@ public class UserProfileAppFragment extends Fragment {
                 String birthdate = birthdateField.getText().toString();
 
                 //If full name field not empty, not equal to current name
-                if(!fullName.isEmpty() && !fullName.equals(current.profile.getNameAsSingleString())){
+                if(!fullName.isEmpty() && !fullName.equals(current.getProfile().getNameAsSingleString())){
                     //Set new user name, if unsuccessful, inform user of issue via alertDialog
-                    if(!UserAccountControl.currentLoggedInUser.profile.setName(fullName.trim())){
+                    if(!UserAccountControl.currentLoggedInUser.getProfile().setName(fullName.trim())){
                         createFragmentAlertDialog(R.string.user_profile_invalid_full_name_title, R.string.user_profile_invalid_full_name_desc, R.string.ok);
                     } else {
                         //If successfully set new full name, display accomplishment message & update full name field
                         Snackbar.make((View) masterLayout, R.string.user_profile_edit_success, Snackbar.LENGTH_SHORT);
-                        fullNameField.setText(UserAccountControl.currentLoggedInUser.profile.getNameAsSingleString());
+                        fullNameField.setText(UserAccountControl.currentLoggedInUser.getProfile().getNameAsSingleString());
                     }
                     //If not, inform user that change needs to be present
                 } else {
@@ -79,14 +78,14 @@ public class UserProfileAppFragment extends Fragment {
                 }
 
                 //If birthdate field not empty, not equal to current birthdate
-                if(!birthdate.isEmpty() && !birthdate.equals(current.profile.getBirthdateAsString())){
+                if(!birthdate.isEmpty() && !birthdate.equals(current.getProfile().getBirthdateAsString())){
                     //Set new brithdate, if unsuccessful, inform user of issue via alertDialog
-                    if(!UserAccountControl.currentLoggedInUser.profile.setBirthdate(birthdate)) {
+                    if(!UserAccountControl.currentLoggedInUser.getProfile().setBirthdate(birthdate)) {
                         createFragmentAlertDialog(R.string.user_profile_invalid_birthdate_title, R.string.user_profile_invalid_birthdate_desc, R.string.ok);
                     } else {
                         //If successfully set new birthdate, inform user of success, update birthdate field
                         Snackbar.make((View) masterLayout, R.string.user_profile_edit_success, Snackbar.LENGTH_SHORT);
-                        birthdateField.setText(UserAccountControl.currentLoggedInUser.profile.getBirthdateAsString());
+                        birthdateField.setText(UserAccountControl.currentLoggedInUser.getProfile().getBirthdateAsString());
                     }
                     //If not, inform user that change needs to be present
                 } else {
@@ -126,7 +125,7 @@ public class UserProfileAppFragment extends Fragment {
                                     //Process password change
                                     UserAccountControl.currentLoggedInUser.setNewPassword(newPW.trim());
                                     UserAccountControl.saveJSON(true);
-                                    Snackbar.make((View)masterLayout, R.string.user_password_success, Snackbar.LENGTH_LONG);
+                                    Snackbar.make((View)masterLayout, R.string.user_password_success, Snackbar.LENGTH_LONG).show();
                                 } else {
                                     //Inform user that new password must be different to existing password
                                     createFragmentAlertDialog(R.string.user_password_new_nochange_title, R.string.user_password_new_nochange_desc, R.string.ok);

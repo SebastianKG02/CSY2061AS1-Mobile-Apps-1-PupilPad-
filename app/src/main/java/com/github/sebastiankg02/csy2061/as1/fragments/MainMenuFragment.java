@@ -1,9 +1,7 @@
 package com.github.sebastiankg02.csy2061.as1.fragments;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -11,6 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import com.github.sebastiankg02.csy2061.as1.R;
 import com.github.sebastiankg02.csy2061.as1.fragments.apps.AppHelper;
+import com.github.sebastiankg02.csy2061.as1.fragments.apps.NotesAppFragment;
 import com.github.sebastiankg02.csy2061.as1.fragments.apps.UserProfileAppFragment;
 import com.github.sebastiankg02.csy2061.as1.user.UserAccountControl;
 
@@ -74,6 +73,13 @@ public class MainMenuFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 AppHelper.moveToFragment(getThis(), UserProfileAppFragment.class, null);
+            }
+        });
+
+        notesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppHelper.moveToFragment(getThis(), NotesAppFragment.class, null);
             }
         });
     }

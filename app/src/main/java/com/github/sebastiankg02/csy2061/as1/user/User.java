@@ -1,6 +1,5 @@
 package com.github.sebastiankg02.csy2061.as1.user;
 
-import com.github.sebastiankg02.csy2061.as1.R;
 import com.github.sebastiankg02.csy2061.as1.user.role.Role;
 
 import org.json.JSONException;
@@ -14,7 +13,7 @@ public class User {
     private String username;
     private String password;
     private Role role;
-    public static UserPersonalProfile profile;
+    private UserPersonalProfile profile;
 
     public static final char[] passwordUppercaseChars = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
     public static final char[] passwordLowercaseChars = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };

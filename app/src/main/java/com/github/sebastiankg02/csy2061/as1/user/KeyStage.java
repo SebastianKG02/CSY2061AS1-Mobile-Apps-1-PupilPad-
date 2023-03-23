@@ -1,4 +1,4 @@
-package com.github.sebastiankg02.csy2061.as1.user.classroom;
+package com.github.sebastiankg02.csy2061.as1.user;
 
 import com.github.sebastiankg02.csy2061.as1.R;
 
@@ -81,7 +81,7 @@ public enum KeyStage {
 
     public static KeyStage fromEducationLevel(int level){
         for (KeyStage ks:
-             all) {
+                all) {
             if(ks.educationLevel == level){
                 return ks;
             }
