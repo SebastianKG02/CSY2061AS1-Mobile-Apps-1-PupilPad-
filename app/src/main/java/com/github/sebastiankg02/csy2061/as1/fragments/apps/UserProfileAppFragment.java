@@ -6,12 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.github.sebastiankg02.csy2061.as1.R;
-import com.github.sebastiankg02.csy2061.as1.fragments.MainMenuFragment;
 import com.github.sebastiankg02.csy2061.as1.user.User;
 import com.github.sebastiankg02.csy2061.as1.user.UserAccountControl;
 import com.google.android.material.snackbar.Snackbar;
@@ -32,12 +30,12 @@ public class UserProfileAppFragment extends Fragment {
 
     private Button backButton;
 
-    public UserProfileAppFragment(){
+    public UserProfileAppFragment() {
         super(R.layout.fragment_user_profile);
     }
 
     @Override
-    public void onViewCreated(View v, Bundle b){
+    public void onViewCreated(View v, Bundle b) {
         super.onViewCreated(v, b);
 
         //Initialise reference to master layout, provides Snackbar functionality
@@ -63,9 +61,9 @@ public class UserProfileAppFragment extends Fragment {
                 String birthdate = birthdateField.getText().toString();
 
                 //If full name field not empty, not equal to current name
-                if(!fullName.isEmpty() && !fullName.equals(current.getProfile().getNameAsSingleString())){
+                if (!fullName.isEmpty() && !fullName.equals(current.getProfile().getNameAsSingleString())) {
                     //Set new user name, if unsuccessful, inform user of issue via alertDialog
-                    if(!UserAccountControl.currentLoggedInUser.getProfile().setName(fullName.trim())){
+                    if (!UserAccountControl.currentLoggedInUser.getProfile().setName(fullName.trim())) {
                         createFragmentAlertDialog(R.string.user_profile_invalid_full_name_title, R.string.user_profile_invalid_full_name_desc, R.string.ok);
                     } else {
                         //If successfully set new full name, display accomplishment message & update full name field
@@ -78,9 +76,9 @@ public class UserProfileAppFragment extends Fragment {
                 }
 
                 //If birthdate field not empty, not equal to current birthdate
-                if(!birthdate.isEmpty() && !birthdate.equals(current.getProfile().getBirthdateAsString())){
+                if (!birthdate.isEmpty() && !birthdate.equals(current.getProfile().getBirthdateAsString())) {
                     //Set new brithdate, if unsuccessful, inform user of issue via alertDialog
-                    if(!UserAccountControl.currentLoggedInUser.getProfile().setBirthdate(birthdate)) {
+                    if (!UserAccountControl.currentLoggedInUser.getProfile().setBirthdate(birthdate)) {
                         createFragmentAlertDialog(R.string.user_profile_invalid_birthdate_title, R.string.user_profile_invalid_birthdate_desc, R.string.ok);
                     } else {
                         //If successfully set new birthdate, inform user of success, update birthdate field
@@ -102,30 +100,30 @@ public class UserProfileAppFragment extends Fragment {
         confirmNewPasswordField = (TextInputEditText) this.getActivity().findViewById(R.id.confirmPWInputField);
 
         setNewPasswordButton = (Button) this.getActivity().findViewById(R.id.saveNewPassword);
-        setNewPasswordButton.setOnClickListener(new View.OnClickListener(){
+        setNewPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 String currentPW = currentPasswordField.getText().toString();
                 String newPW = newPasswordField.getText().toString();
                 String newPWConfirm = confirmNewPasswordField.getText().toString();
 
                 //Check if current password is not empty
-                if(currentPW.isEmpty()){
+                if (currentPW.isEmpty()) {
                     //If it is empty, inform user of issue
                     createFragmentAlertDialog(R.string.user_password_current_pw_invalid_title, R.string.user_password_current_pw_invalid_desc, R.string.ok);
                 } else {
                     //Check if current password matches password on file
-                    if(UserAccountControl.currentLoggedInUser.getPassword().equals(currentPW.trim())){
+                    if (UserAccountControl.currentLoggedInUser.getPassword().equals(currentPW.trim())) {
                         //Check if both new passwords are equal
-                        if(newPW.trim().equals(newPWConfirm.trim())) {
+                        if (newPW.trim().equals(newPWConfirm.trim())) {
                             //Check if new password is valid
                             if (UserAccountControl.currentLoggedInUser.validatePassword(newPW.trim()).isPasswordValid()) {
                                 //Check if new password is different to existing password
-                                if(!UserAccountControl.currentLoggedInUser.checkPasswordSimilarity(newPW.trim())){
+                                if (!UserAccountControl.currentLoggedInUser.checkPasswordSimilarity(newPW.trim())) {
                                     //Process password change
                                     UserAccountControl.currentLoggedInUser.setNewPassword(newPW.trim());
                                     UserAccountControl.saveJSON(true);
-                                    Snackbar.make((View)masterLayout, R.string.user_password_success, Snackbar.LENGTH_LONG).show();
+                                    Snackbar.make((View) masterLayout, R.string.user_password_success, Snackbar.LENGTH_LONG).show();
                                 } else {
                                     //Inform user that new password must be different to existing password
                                     createFragmentAlertDialog(R.string.user_password_new_nochange_title, R.string.user_password_new_nochange_desc, R.string.ok);
@@ -151,17 +149,17 @@ public class UserProfileAppFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppHelper.moveToFragment(getFragment(), MainMenuFragment.class, null);
+                AppHelper.back(getFragment());
             }
         });
 
     }
 
-    private UserProfileAppFragment getFragment(){
+    private Fragment getFragment() {
         return this;
     }
 
-    public void createFragmentAlertDialog(int title, int message, int okID){
+    public void createFragmentAlertDialog(int title, int message, int okID) {
         createAlertDialog(this, title, message, okID);
     }
 }

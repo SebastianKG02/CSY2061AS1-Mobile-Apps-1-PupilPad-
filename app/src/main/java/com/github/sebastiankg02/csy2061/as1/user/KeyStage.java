@@ -61,11 +61,23 @@ public enum KeyStage {
     private int educationTag_Long;
     private int educationTag_Short;
 
-    private KeyStage(int level, int tag_Long, int tag_Short){
+    private KeyStage(int level, int tag_Long, int tag_Short) {
         this.educationLevel = level;
         this.educationTag_Long = tag_Long;
         this.educationTag_Short = tag_Short;
-    };
+    }
+
+    ;
+
+    public static KeyStage fromEducationLevel(int level) {
+        for (KeyStage ks :
+                all) {
+            if (ks.educationLevel == level) {
+                return ks;
+            }
+        }
+        return null;
+    }
 
     public int getEducationLevel() {
         return this.educationLevel;
@@ -75,18 +87,8 @@ public enum KeyStage {
         return this.educationTag_Long;
     }
 
-    public int getShortEducationTag(){
+    public int getShortEducationTag() {
         return this.educationTag_Short;
-    }
-
-    public static KeyStage fromEducationLevel(int level){
-        for (KeyStage ks:
-                all) {
-            if(ks.educationLevel == level){
-                return ks;
-            }
-        }
-        return null;
     }
 
 }

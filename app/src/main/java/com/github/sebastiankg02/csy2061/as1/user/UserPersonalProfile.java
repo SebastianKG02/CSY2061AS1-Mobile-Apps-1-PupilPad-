@@ -17,7 +17,7 @@ public class UserPersonalProfile {
     private KeyStage stage;
     private int age;
 
-    public UserPersonalProfile(UserPersonalProfile other){
+    public UserPersonalProfile(UserPersonalProfile other) {
         this.name = other.name;
         this.birthdate = other.birthdate;
         this.lastLogin = other.lastLogin;
@@ -25,7 +25,7 @@ public class UserPersonalProfile {
         this.age = other.age;
     }
 
-    public UserPersonalProfile(String[] name, LocalDate birthdate, LocalDateTime lastLogin, KeyStage stage, int age){
+    public UserPersonalProfile(String[] name, LocalDate birthdate, LocalDateTime lastLogin, KeyStage stage, int age) {
         this.name = name;
         this.birthdate = birthdate;
         this.lastLogin = lastLogin;
@@ -36,7 +36,7 @@ public class UserPersonalProfile {
     public UserPersonalProfile(JSONObject j) throws JSONException {
         String t_name = j.getString("name");
         this.name = t_name.split(" ");
-        if(j.getString("birthdate").isEmpty()) {
+        if (j.getString("birthdate").isEmpty()) {
             this.birthdate = LocalDate.now();
         } else {
             this.birthdate = LocalDate.parse(j.getString("birthdate"), AppHelper.formatterDate);
@@ -46,46 +46,52 @@ public class UserPersonalProfile {
         this.age = j.getInt("age");
     }
 
-    public UserPersonalProfile(){
-        this.name = new String[]{ "" };
+    public UserPersonalProfile() {
+        this.name = new String[]{""};
         this.birthdate = LocalDate.now();
         this.lastLogin = LocalDateTime.now();
         this.stage = KeyStage.GUEST;
         this.age = 0;
     }
 
-    public String[] getName(){
+    public String[] getName() {
         return this.name;
     }
 
-    public LocalDate getBirthdate(){
+    public void setName(String[] name) {
+        this.name = name;
+    }
+
+    public LocalDate getBirthdate() {
         return this.birthdate;
     }
 
-    public String getBirthdateAsString() { return AppHelper.formatterDate.format(birthdate); }
+    public String getBirthdateAsString() {
+        return AppHelper.formatterDate.format(birthdate);
+    }
 
-    public boolean setBirthdate(String birthdateRaw){
+    public boolean setBirthdate(String birthdateRaw) {
         try {
             this.birthdate = LocalDate.parse(birthdateRaw, AppHelper.formatterDate);
             return true;
-        } catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
 
-    public boolean isBirthday(){
-        if(birthdate.getMonth().compareTo(LocalDate.now().getMonth()) == 0
-           && birthdate.getDayOfMonth() == LocalDate.now().getDayOfMonth()){
+    public boolean isBirthday() {
+        if (birthdate.getMonth().compareTo(LocalDate.now().getMonth()) == 0
+                && birthdate.getDayOfMonth() == LocalDate.now().getDayOfMonth()) {
             return true;
         } else {
             return false;
         }
     }
 
-    public String getNameAsSingleString(){
+    public String getNameAsSingleString() {
         String output = "";
 
-        for(String s: name){
+        for (String s : name) {
             output += s + " ";
         }
 
@@ -96,15 +102,15 @@ public class UserPersonalProfile {
         return lastLogin;
     }
 
-    public void setLastLogin(LocalDateTime newLoginTime){
+    public void setLastLogin(LocalDateTime newLoginTime) {
         this.lastLogin = newLoginTime;
     }
 
-    public KeyStage getKeyStage(){
+    public KeyStage getKeyStage() {
         return this.stage;
     }
 
-    public void setKeyStage(KeyStage stage){
+    public void setKeyStage(KeyStage stage) {
         this.stage = stage;
     }
 
@@ -118,20 +124,16 @@ public class UserPersonalProfile {
         return output;
     }
 
-    public boolean setName(String singleStringName){
+    public boolean setName(String singleStringName) {
         try {
             String[] output = singleStringName.trim().split(" ");
             output[output.length - 1].trim();
             this.name = output;
-        } catch (Exception e){
+        } catch (Exception e) {
             Log.e("UAC", "Error changing name. " + e.getMessage());
             return false;
         } finally {
             return true;
         }
-    }
-
-    public void setName(String[] name){
-        this.name = name;
     }
 }

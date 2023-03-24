@@ -4,8 +4,11 @@
     android:id="@+id/noteItemLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@drawable/notes_item_border"
+    android:elevation="10dp"
     android:orientation="horizontal"
-    android:background="@drawable/notes_item_border">
+    android:padding="5dp">
 
     <ImageView
         android:id="@+id/noteIcon"
@@ -16,24 +19,28 @@
 
     <LinearLayout
         android:id="@+id/fileAttributeLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_margin="2.5dp"
+        android:layout_weight="100"
         android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/itemFileName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="FILE NAME (CREATION DATE)"
+            android:textSize="10dp"
+            android:textStyle="italic" />
 
         <TextView
             android:id="@+id/itemDisplayName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="ITEM DISPLAY NAME"
+            android:textSize="16dp"
             android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/itemFileName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="FILE NAME (CREATION DATE)"
-            android:textStyle="italic" />
 
     </LinearLayout>
 

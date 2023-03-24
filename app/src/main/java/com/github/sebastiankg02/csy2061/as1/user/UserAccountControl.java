@@ -19,38 +19,37 @@ import java.util.UUID;
  * Broad manager for all users within the application.
  * Handles login, password changing e.t.c.
  *
- * @todo Integrate with School SQL server so that this application can be centrally controlled and updated.
- *
  * @author Sebastian Kamil Gluch (21414551)
+ * @todo Integrate with School SQL server so that this application can be centrally controlled and updated.
  */
 public class UserAccountControl {
 
+    public static User currentLoggedInUser;
+    public static Activity mOwner;
     private static ArrayList<User> users;
     private static JSONObject userJSON = new JSONObject();
-    public static User currentLoggedInUser;
     private static boolean _initComplete = false;
-    public static Activity mOwner;
     private static String path;
 
-    public static void init(String userJSONPath, Activity owner) throws JSONException, IOException{
-        if(!_initComplete){
+    public static void init(String userJSONPath, Activity owner) throws JSONException, IOException {
+        if (!_initComplete) {
             path = userJSONPath;
             mOwner = owner;
             users = new ArrayList<User>();
             populateUserJSON(false);
             Log.d("UAC", "Initialising UAC");
             try {
-                userJSON = new JSONObject(AppHelper.loadFile("",mOwner.getFilesDir() + "/" +userJSONPath, owner, true, true, true, getUserJSON().toString(), null).payload);
-            }catch (Exception e){
+                userJSON = new JSONObject(AppHelper.loadFile("", mOwner.getFilesDir() + "/" + userJSONPath, owner, true, true, true, getUserJSON().toString(), null).payload);
+            } catch (Exception e) {
                 Log.i("UAC", "User JSON generated: " + getUserJSON().toString());
-                AppHelper.saveFile("",userJSONPath,getUserJSON().toString(), owner, null);
-                userJSON = new JSONObject(AppHelper.loadFile("",mOwner.getFilesDir() + "/" +userJSONPath, owner, true, true, true, getUserJSON().toString(), null).payload);
+                AppHelper.saveFile("", userJSONPath, getUserJSON().toString(), owner, null, true);
+                userJSON = new JSONObject(AppHelper.loadFile("", mOwner.getFilesDir() + "/" + userJSONPath, owner, true, true, true, getUserJSON().toString(), null).payload);
             }
         }
         users = getUsersFromJSON();
     }
 
-    private static void populateUserJSON(boolean saveJSON){
+    private static void populateUserJSON(boolean saveJSON) {
         User defaultAdministrator = new User(
                 "admin",
                 "AdminPassword1",
@@ -123,14 +122,14 @@ public class UserAccountControl {
         users.add(pupil4);
         users.add(pupilBanned);
 
-        if(saveJSON) {
+        if (saveJSON) {
             saveJSON(false);
         }
     }
 
     private static JSONObject getUserJSON() throws JSONException {
         JSONObject output = new JSONObject();
-        for (User u: users) {
+        for (User u : users) {
             output.put(u.getId().toString(), u.toJSON());
         }
 
@@ -141,21 +140,21 @@ public class UserAccountControl {
         ArrayList<User> output = new ArrayList<User>();
         Iterator<String> jsonKeys = userJSON.keys();
 
-        while(jsonKeys.hasNext()){
+        while (jsonKeys.hasNext()) {
             String objectKey = jsonKeys.next();
             Log.d("UAC", "Loading user [" + objectKey + "]");
             output.add(new User(userJSON.getJSONObject(objectKey)));
-            Log.d("UAC", "Complete! Loaded: \n" + output.get(output.size()-1).toJSON().toString());
+            Log.d("UAC", "Complete! Loaded: \n" + output.get(output.size() - 1).toJSON().toString());
         }
 
         return output;
     }
 
-    public static boolean saveJSON(boolean updateUserJSON){
-        if(currentLoggedInUser != null) {
+    public static boolean saveJSON(boolean updateUserJSON) {
+        if (currentLoggedInUser != null) {
             users.add(currentLoggedInUser);
         }
-        if(updateUserJSON){
+        if (updateUserJSON) {
             try {
                 userJSON = getUserJSON();
             } catch (JSONException e) {
@@ -164,7 +163,7 @@ public class UserAccountControl {
         }
 
         Log.d("UAC", "Saving json: " + userJSON.toString());
-        if(AppHelper.saveFile("",path, userJSON.toString(), mOwner, null) == AppHelper.FileSystemReturn.FILE_SAVED){
+        if (AppHelper.saveFile("", path, userJSON.toString(), mOwner, null, true) == AppHelper.FileSystemReturn.FILE_SAVED) {
             users.remove(currentLoggedInUser);
             return true;
         } else {
@@ -173,25 +172,25 @@ public class UserAccountControl {
         }
     }
 
-    public static boolean validateUserExistence(String username){
-        if(getUser(username) == null){
+    public static boolean validateUserExistence(String username) {
+        if (getUser(username) == null) {
             return false;
         } else {
             return true;
         }
     }
 
-    public static boolean login(String username, String password){
-        Log.i("UAC", "LoginAttempt [u: " + username + " & p: " +password + "]");
-        if(validateUserExistence(username)){
+    public static boolean login(String username, String password) {
+        Log.i("UAC", "LoginAttempt [u: " + username + " & p: " + password + "]");
+        if (validateUserExistence(username)) {
             Log.i("UAC", "User exists!");
             User u = getUser(username);
-            if(u.getPassword().equals(password)){
+            if (u.getPassword().equals(password)) {
                 Log.i("UAC", "Password correct!");
                 currentLoggedInUser = new User(u);
                 users.remove(u);
 
-                if(currentLoggedInUser.getProfile() != null) {
+                if (currentLoggedInUser.getProfile() != null) {
                     currentLoggedInUser.getProfile().setLastLogin(LocalDateTime.now());
                 }
 
@@ -205,19 +204,19 @@ public class UserAccountControl {
         }
     }
 
-    public static User getUserByUUID(UUID id){
-        for(User u: users){
-            if(u.getId().equals(id)){
+    public static User getUserByUUID(UUID id) {
+        for (User u : users) {
+            if (u.getId().equals(id)) {
                 return u;
             }
         }
         return null;
     }
 
-    public static User getUser(String username){
-        for(User u: users){
+    public static User getUser(String username) {
+        for (User u : users) {
             Log.d("UAC", "Checking [" + username + "] against User[" + u.getUsername() + "]");
-            if(u.getUsername().equals(username)){
+            if (u.getUsername().equals(username)) {
                 return u;
             }
         }

@@ -24,26 +24,16 @@ public enum Role {
     private int roleID_Long;
     private int roleID_Short;
 
-    private Role(int accessLevel, int roleIDLong, int roleIDShort){
+    private Role(int accessLevel, int roleIDLong, int roleIDShort) {
         this.level = accessLevel;
         this.roleID_Long = roleIDLong;
         this.roleID_Short = roleIDShort;
-    };
-
-    public int getAccessLevel(){
-        return level;
     }
 
-    public int getLongRoleID(){
-        return roleID_Long;
-    }
+    ;
 
-    public int getShortRoleID(){
-        return roleID_Short;
-    }
-
-    public static Role fromInt(int accessLevel){
-        switch(accessLevel){
+    public static Role fromInt(int accessLevel) {
+        switch (accessLevel) {
             case 1:
                 return Role.USER;
             case 2:
@@ -55,7 +45,19 @@ public enum Role {
         }
     }
 
-    public static int toInt(Role r){
+    public static int toInt(Role r) {
         return r.level;
+    }
+
+    public int getAccessLevel() {
+        return level;
+    }
+
+    public int getLongRoleID() {
+        return roleID_Long;
+    }
+
+    public int getShortRoleID() {
+        return roleID_Short;
     }
 }

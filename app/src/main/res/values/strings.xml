@@ -110,13 +110,18 @@
     <string name="user_password_new_nochange_title">Please choose a new password!</string>
     <string name="user_password_new_nochange_desc">Your new password must be different to your existing password.</string>
     <string name="user_password_success">Password changed successfully.</string>
-    <string name="delete_file_title">Confirm File Delete</string>
+    <string name="delete_file_title">Delete file?</string>
     <string name="delete_file_desc">This will permanently delete the file. \n\nAre you sure you want to do this?</string>
-    <string name="delete_file_confirm">Delete Anyway</string>
-    <string name="delete_file_cancel">Cancel</string>
+    <string name="delete_confirm">Delete Anyway</string>
+    <string name="delete_cancel">Cancel</string>
     <string name="delete_file_complete">File successfully deleted.</string>
     <string name="delete_file_error">File could not be deleted. Please try again.</string>
     <string name="delete_file_cancel_complete">File not deleted.</string>
+    <string name="delete_folder_title">Delete folder?</string>
+    <string name="delete_folder_desc">This will permanently delete this folder and EVERYTHING inside of it!\n\nAre you sure you want to do this?</string>
+    <string name="delete_folder_complete">Folder successfully deleted.</string>
+    <string name="delete_folder_error">Folder could not be deleted. Please try again.</string>
+    <string name="delete_folder_cancel_complete">Folder not deleted.</string>
     <string name="notes_app_new_file">Create new file</string>
     <string name="notes_app_new_folder">Create new folder</string>
     <string name="notes_app_back_dir">Back to previous folder</string>
@@ -130,4 +135,13 @@
     <string name="notes_app_new_folder_success">New folder created!</string>
     <string name="notes_app_new_folder_error">Could not make new folder.</string>
     <string name="notes_app_new_folder_cancel">Folder creation cancelled.</string>
+    <string name="notes_app_cant_go_back">Can\'t go back: no previous folder!</string>
+    <string name="notes_edit_save_file">Save file</string>
+    <string name="notes_edit_exit">Exit Editor</string>
+    <string name="notes_edit_exit_dialog_title">Are you sure you want to exit?</string>
+    <string name="notes_edit_exit_dialog_desc">Any unsaved changes will be lost!</string>
+    <string name="notes_edit_exit_dialog_save_exit">Save &amp; Exit</string>
+    <string name="notes_edit_exit_dialog_exit_only">Exit Anyway</string>
+    <string name="notes_edit_save_success">File saved successfully.</string>
+    <string name="notes_edit_save_error">Could not save file! Please try again.</string>
 </resources>

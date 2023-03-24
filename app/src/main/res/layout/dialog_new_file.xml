@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/notes_app_new_file_name"
             android:inputType="text"
-            android:singleLine="true"/>
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/notes_app_new_file_dp_name"
             android:inputType="text"
-            android:singleLine="true"/>
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/notes_app_new_file_title"
             android:inputType="text"
-            android:singleLine="true"/>
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>

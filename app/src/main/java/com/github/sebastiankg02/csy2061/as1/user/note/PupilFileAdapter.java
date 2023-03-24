@@ -18,21 +18,33 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.sebastiankg02.csy2061.as1.R;
 import com.github.sebastiankg02.csy2061.as1.fragments.apps.AppHelper;
+import com.github.sebastiankg02.csy2061.as1.fragments.apps.NotesAppFragment;
+import com.github.sebastiankg02.csy2061.as1.fragments.apps.NotesEditorFragment;
 import com.github.sebastiankg02.csy2061.as1.user.User;
+import com.github.sebastiankg02.csy2061.as1.user.UserAccountControl;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
-public class PupilFileAdapter extends RecyclerView.Adapter<PupilFileAdapter.ViewHolder>{
-    private ArrayList<PupilFile> files;
-
-    public static final int FOLDER_ICON = android.R.drawable.sym_def_app_icon;
+public class PupilFileAdapter extends RecyclerView.Adapter<PupilFileAdapter.ViewHolder> {
+    public static final int FOLDER_ICON = android.R.drawable.ic_menu_agenda;
     public static final int FILE_ICON = android.R.drawable.ic_menu_edit;
+    public static String currentDirectory;
+    public ArrayList<PupilFile> files;
+    private Activity owner;
+    private User currentUser;
 
-    public PupilFileAdapter(String currentDirectory, Activity owner, User currentUser){
+    public PupilFileAdapter(String currentDirectory, Activity owner, User currentUser) {
+        this.currentDirectory = currentDirectory;
+        this.owner = owner;
+        this.currentUser = currentUser;
+        loadItems();
+    }
+
+    public void loadItems() {
         //Load directory
         File f = new File(owner.getFilesDir() + "/" + currentDirectory);
         //Get all files in directory
@@ -40,10 +52,10 @@ public class PupilFileAdapter extends RecyclerView.Adapter<PupilFileAdapter.View
 
         files = new ArrayList<PupilFile>();
 
-        Log.i("NOTES", "Loading Notes from "+owner.getFilesDir()+"/" + currentDirectory);
-        Log.i("NOTES", "FileStatus: " + f.exists() +"\nFiles?: " + allFilesInDir);
+        Log.i("NOTES", "Loading Notes from " + owner.getFilesDir() + "/" + currentDirectory);
+        Log.i("NOTES", "FileStatus: " + f.exists() + "\nFiles?: " + allFilesInDir);
 
-        if(f.exists() && allFilesInDir != null && allFilesInDir.length > 0) {
+        if (f.exists() && allFilesInDir != null && allFilesInDir.length > 0) {
             //Loop through files, determine which files & folders user has access to
             for (int i = 0; i < allFilesInDir.length; i++) {
                 //Verify file is actual file
@@ -54,7 +66,7 @@ public class PupilFileAdapter extends RecyclerView.Adapter<PupilFileAdapter.View
                         try {
                             //Load the file
                             Log.i("NOTES", "Loading: " + currentDirectory + "/" + allFilesInDir[i].getName());
-                            files.add(new PupilFile(currentDirectory + "\\",owner.getFilesDir() + "/" + currentDirectory + "/" + allFilesInDir[i].getName(), owner));
+                            files.add(new PupilFile(currentDirectory + "\\", owner.getFilesDir() + "/" + currentDirectory + "/" + allFilesInDir[i].getName(), owner));
                             //If user is not owner, remove this file from list of viewable files
                             if (!files.get(files.size() - 1).getOwner().equals(currentUser.getId())) {
                                 files.remove(files.size() - 1);
@@ -81,38 +93,43 @@ public class PupilFileAdapter extends RecyclerView.Adapter<PupilFileAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PupilFile currentFile = files.get(position);
 
-        if(currentFile.type.equals(PupilFile.PupilFileType.FILE)){
+        if (currentFile.type.equals(PupilFile.PupilFileType.FILE)) {
             holder.itemIcon.setImageResource(FILE_ICON);
-        }else if(currentFile.type.equals(PupilFile.PupilFileType.FOLDER)){
+        } else if (currentFile.type.equals(PupilFile.PupilFileType.FOLDER)) {
             holder.itemIcon.setImageResource(FOLDER_ICON);
         }
 
         holder.itemDisplayName.setText(currentFile.getDisplayName());
-        holder.itemFileName.setText(currentFile.getFileName());
-
+        if (currentFile.type.equals(PupilFile.PupilFileType.FILE)) {
+            holder.itemFileName.setText("\"" + currentFile.getTitle() + "\"");
+        } else {
+            holder.itemFileName.setText("");
+        }
         //Provide delete button functionality (create alert dialog, asking user to confirm, delete if true)
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog deleteDialog = AppHelper.createAlertDialogBuilder(view.getContext(), R.string.delete_file_title, R.string.delete_file_desc)
-                        .setPositiveButton(R.string.delete_file_confirm, new DialogInterface.OnClickListener() {
+                AlertDialog deleteDialog = AppHelper.createAlertDialogBuilder(view.getContext(), currentFile.type.deleteDialogTitle, currentFile.type.deleteDialogDesc)
+                        .setPositiveButton(currentFile.type.deleteTag, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 File toDelete = new File(view.getContext().getFilesDir(), currentFile.getPath() + currentFile.getFileName());
-                                if(toDelete.exists()){
-                                    if(toDelete.delete()) {
-                                        Toast.makeText(view.getContext(), R.string.delete_file_complete, Toast.LENGTH_LONG);
+                                if (toDelete.exists()) {
+                                    if (toDelete.delete()) {
+                                        Snackbar.make(view, currentFile.type.deleteSuccess, Snackbar.LENGTH_SHORT).show();
                                     } else {
-                                        Toast.makeText(view.getContext(), R.string.delete_file_error, Toast.LENGTH_LONG);
+                                        Snackbar.make(view, currentFile.type.deleteFail, Snackbar.LENGTH_LONG).show();
                                     }
                                 } else {
-                                    Toast.makeText(view.getContext(), R.string.delete_file_error, Toast.LENGTH_LONG);
+                                    Snackbar.make(view, currentFile.type.deleteFail, Snackbar.LENGTH_LONG).show();
                                 }
+                                files.remove(currentFile);
+                                notifyDataSetChanged();
                             }
-                        }).setNegativeButton(R.string.delete_file_cancel, new DialogInterface.OnClickListener() {
+                        }).setNegativeButton(currentFile.type.cancelTag, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                Toast.makeText(view.getContext(), R.string.delete_file_cancel_complete, Toast.LENGTH_LONG);
+                                Toast.makeText(view.getContext(), currentFile.type.cancelSuccessTag, Toast.LENGTH_LONG).show();
                             }
                         }).create();
                 deleteDialog.show();
@@ -122,7 +139,24 @@ public class PupilFileAdapter extends RecyclerView.Adapter<PupilFileAdapter.View
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "TODO: Implement this!", Toast.LENGTH_LONG);
+                Toast.makeText(view.getContext(), "TODO: Implement this!", Toast.LENGTH_SHORT).show();
+                switch (currentFile.type) {
+                    case FILE:
+                        NotesEditorFragment.currentFile = new PupilFile(UserAccountControl.currentLoggedInUser, currentFile);
+                        AppHelper.moveToFragment(NotesEditorFragment.class, null);
+                        break;
+                    case FOLDER:
+                        //Get folder path from file JSON
+                        Log.i("AH", "Attempting to move to new folder: " + currentFile.getFileName().split("\\.").length);
+                        String newPathAddition = currentFile.getFileName().split("\\.")[0];
+                        NotesAppFragment.currentPath += "/" + newPathAddition;
+                        currentDirectory = NotesAppFragment.currentPath;
+                        Log.i("AH", "Entering new folder! [" + NotesAppFragment.currentPath + "]");
+                        NotesAppFragment.updateAdapter();
+                        break;
+                    case NONE:
+                        break;
+                }
             }
         });
     }
@@ -132,15 +166,14 @@ public class PupilFileAdapter extends RecyclerView.Adapter<PupilFileAdapter.View
         return files.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder
-    {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public LinearLayout itemLayout;
         public ImageView itemIcon;
         public TextView itemDisplayName;
         public TextView itemFileName;
         public ImageButton deleteButton;
 
-        public ViewHolder(View v){
+        public ViewHolder(View v) {
             super(v);
             this.itemIcon = (ImageView) v.findViewById(R.id.noteIcon);
             this.itemDisplayName = (TextView) v.findViewById(R.id.itemDisplayName);

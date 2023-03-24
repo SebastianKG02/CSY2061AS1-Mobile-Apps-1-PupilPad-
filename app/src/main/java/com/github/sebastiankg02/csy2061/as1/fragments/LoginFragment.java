@@ -21,7 +21,7 @@ public class LoginFragment extends Fragment {
     private TextInputEditText usernameField;
     private TextInputEditText passwordField;
 
-    public LoginFragment(){
+    public LoginFragment() {
         super(R.layout.fragment_login);
     }
 
@@ -41,25 +41,25 @@ public class LoginFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View v, Bundle b){
+    public void onViewCreated(View v, Bundle b) {
         super.onViewCreated(v, b);
 
         usernameField = (TextInputEditText) this.getActivity().findViewById(R.id.usernameField);
         passwordField = (TextInputEditText) this.getActivity().findViewById(R.id.passwordField);
 
         Button loginButton = (Button) getActivity().findViewById(R.id.login);
-        loginButton.setOnClickListener(new View.OnClickListener(){
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 String username = usernameField.getText().toString();
                 String password = passwordField.getText().toString();
-                if(username.isEmpty() || password.isEmpty()){
+                if (username.isEmpty() || password.isEmpty()) {
                     createFragmentAlertDialog(R.string.login_failed, R.string.invalid_details, R.string.ok);
                 } else {
-                    if(UserAccountControl.login(username, password)){
+                    if (UserAccountControl.login(username, password)) {
                         createFragmentAlertDialog(R.string.login_success, R.string.login_success, R.string.contToMain);
                         try {
-                            Log.i("UAC", "Login success! \n" +UserAccountControl.currentLoggedInUser.toJSON().toString());
+                            Log.i("UAC", "Login success! \n" + UserAccountControl.currentLoggedInUser.toJSON().toString());
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
@@ -78,7 +78,7 @@ public class LoginFragment extends Fragment {
 
     }
 
-    public void createFragmentAlertDialog(int title, int message, int okID){
+    public void createFragmentAlertDialog(int title, int message, int okID) {
         createAlertDialog(this, title, message, okID);
     }
 }

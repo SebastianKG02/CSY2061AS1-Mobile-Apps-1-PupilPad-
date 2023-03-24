@@ -18,7 +18,7 @@ public class UserInfoFragment extends Fragment {
     private TextView userFullNameField;
     private TextView userStageInfoField;
 
-    public UserInfoFragment(Bundle b){
+    public UserInfoFragment(Bundle b) {
         super(R.layout.fragment_user_info);
     }
 
@@ -29,13 +29,13 @@ public class UserInfoFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup vg, Bundle b){
+    public View onCreateView(LayoutInflater inflater, ViewGroup vg, Bundle b) {
         masterView = inflater.inflate(R.layout.fragment_user_info, vg, false);
         return masterView;
     }
 
     @Override
-    public void onViewCreated(View v, Bundle b){
+    public void onViewCreated(View v, Bundle b) {
         super.onViewCreated(v, b);
         Log.i("UPI", "Updating Fields..");
         userFullNameField = (TextView) masterView.findViewById(R.id.userFullName);
@@ -46,7 +46,7 @@ public class UserInfoFragment extends Fragment {
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
     }
 

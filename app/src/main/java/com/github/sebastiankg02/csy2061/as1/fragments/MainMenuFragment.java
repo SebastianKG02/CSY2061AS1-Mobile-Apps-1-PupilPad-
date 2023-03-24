@@ -25,16 +25,17 @@ public class MainMenuFragment extends Fragment {
 
     private LinearLayout masterLayout;
 
-    public MainMenuFragment(Bundle b){
+    public MainMenuFragment(Bundle b) {
         super(R.layout.fragment_main_menu);
     }
 
-    public MainMenuFragment(){
+    public MainMenuFragment() {
         super(R.layout.fragment_main_menu);
     }
 
-    public void onViewCreated(View v, Bundle b){
+    public void onViewCreated(View v, Bundle b) {
         super.onViewCreated(v, b);
+        AppHelper.fragmentManager = getActivity().getSupportFragmentManager();
 
         masterLayout = (LinearLayout) this.getActivity().findViewById(R.id.mainMenuMasterLayout);
 
@@ -47,13 +48,13 @@ public class MainMenuFragment extends Fragment {
         exitButton = (ImageButton) this.getActivity().findViewById(R.id.exitButton);
 
         //If user is less than ADMINISTRATOR, remove admin button access
-        if(UserAccountControl.currentLoggedInUser.getRole().getAccessLevel() < 3){
+        if (UserAccountControl.currentLoggedInUser.getRole().getAccessLevel() < 3) {
             masterLayout.removeView((View) adminButton);
             //If user is less than MODERATOR, remove class management button access
-            if(UserAccountControl.currentLoggedInUser.getRole().getAccessLevel() < 2){
+            if (UserAccountControl.currentLoggedInUser.getRole().getAccessLevel() < 2) {
                 masterLayout.removeView((View) classMgmtButton);
                 //If user is less than USER, remove all but profile and exit buttons
-                if(UserAccountControl.currentLoggedInUser.getRole().getAccessLevel() < 1){
+                if (UserAccountControl.currentLoggedInUser.getRole().getAccessLevel() < 1) {
                     masterLayout.removeView((View) notesButton);
                     masterLayout.removeView((View) quizButton);
                     masterLayout.removeView((View) certsButton);
@@ -72,24 +73,15 @@ public class MainMenuFragment extends Fragment {
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppHelper.moveToFragment(getThis(), UserProfileAppFragment.class, null);
+                AppHelper.moveToFragment(UserProfileAppFragment.class, null);
             }
         });
 
         notesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppHelper.moveToFragment(getThis(), NotesAppFragment.class, null);
+                AppHelper.moveToFragment(NotesAppFragment.class, null);
             }
         });
     }
-
-    private MainMenuFragment getThis(){
-        return this;
-    }
-
-    public void appBack() {
-        AppHelper.back(this);
-    }
-
 }
