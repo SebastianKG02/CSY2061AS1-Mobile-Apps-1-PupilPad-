@@ -15,7 +15,7 @@ import com.github.sebastiankg02.csy2061.as1.fragments.apps.UserProfileAppFragmen
 import com.github.sebastiankg02.csy2061.as1.user.UserAccountControl;
 
 public class MainMenuFragment extends Fragment {
-
+    //References to UI elements within Fragment
     private ImageButton notesButton;
     private ImageButton quizButton;
     private ImageButton certsButton;
@@ -23,13 +23,9 @@ public class MainMenuFragment extends Fragment {
     private ImageButton classMgmtButton;
     private ImageButton adminButton;
     private ImageButton exitButton;
-
     private LinearLayout masterLayout;
 
-    public MainMenuFragment(Bundle b) {
-        super(R.layout.fragment_main_menu);
-    }
-
+    //Default constructor
     public MainMenuFragment() {
         super(R.layout.fragment_main_menu);
     }
@@ -38,8 +34,8 @@ public class MainMenuFragment extends Fragment {
         super.onViewCreated(v, b);
         AppHelper.fragmentManager = getActivity().getSupportFragmentManager();
 
+        //Get references to UI elements
         masterLayout = (LinearLayout) this.getActivity().findViewById(R.id.mainMenuMasterLayout);
-
         notesButton = (ImageButton) this.getActivity().findViewById(R.id.notesAppButton);
         quizButton = (ImageButton) this.getActivity().findViewById(R.id.quizAppButton);
         certsButton = (ImageButton) this.getActivity().findViewById(R.id.certAppButton);
@@ -71,6 +67,7 @@ public class MainMenuFragment extends Fragment {
             }
         });
 
+        //Provide profile button functionality
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,6 +75,7 @@ public class MainMenuFragment extends Fragment {
             }
         });
 
+        //Provide notes button functionality
         notesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,11 +83,13 @@ public class MainMenuFragment extends Fragment {
             }
         });
 
+        //Provide quiz button functionality
         quizButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AppHelper.moveToFragment(QuizAppFragment.class, null);
             }
         });
+        //TODO: Implement more apps!
     }
 }

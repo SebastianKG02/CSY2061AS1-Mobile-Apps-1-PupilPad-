@@ -1,7 +1,5 @@
 package com.github.sebastiankg02.csy2061.as1.user;
 
-import android.util.Log;
-
 import com.github.sebastiankg02.csy2061.as1.fragments.apps.AppHelper;
 
 import org.json.JSONException;
@@ -11,18 +9,20 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /*
- * Simple class holding data about a user 
+ * Simple class holding data about a user
  */
 public class UserPersonalProfile {
-	//User full name (Supports any amount of sub-names)
+    //User full name (Supports any amount of sub-names)
     private String[] name;
+    //User birthdate
     private LocalDate birthdate;
+    //User's last login time
     private LocalDateTime lastLogin;
-	//User key stage - used to provide "Year Group" information on UserProfileInformation fragment
+    //User key stage - used to provide "Year Group" information on UserProfileInformation fragment
     private KeyStage stage;
     private int age;
 
-	//Copy constructor
+    //Copy constructor
     public UserPersonalProfile(UserPersonalProfile other) {
         this.name = other.name;
         this.birthdate = other.birthdate;
@@ -31,7 +31,7 @@ public class UserPersonalProfile {
         this.age = other.age;
     }
 
-	//Full custom constructor
+    //Full custom constructor
     public UserPersonalProfile(String[] name, LocalDate birthdate, LocalDateTime lastLogin, KeyStage stage, int age) {
         this.name = name;
         this.birthdate = birthdate;
@@ -40,29 +40,29 @@ public class UserPersonalProfile {
         this.age = age;
     }
 
-	//JSON Constructor, creates UPP object based on JSON data provided
-	//To be used with AppHelper.load
+    //JSON Constructor, creates UPP object based on JSON data provided
+    //To be used with AppHelper.load
     public UserPersonalProfile(JSONObject j) throws JSONException {
         String t_name = j.getString("name");
-		//Convert loaded JSON string into String array
+        //Convert loaded JSON string into String array
         this.name = t_name.split(" ");
-		
-		//Check for birthdate entry
+
+        //Check for birthdate entry
         if (j.getString("birthdate").isEmpty()) {
-			//Generate new birthdate entry
+            //Generate new birthdate entry
             this.birthdate = LocalDate.now();
         } else {
-			//Parse loaded JSON string into LocalDate
+            //Parse loaded JSON string into LocalDate
             this.birthdate = LocalDate.parse(j.getString("birthdate"), AppHelper.formatterDate);
         }
-		
-		//Get rest of UPP information
+
+        //Get rest of UPP information
         this.lastLogin = LocalDateTime.from(AppHelper.formatterDateTime.parse(j.getString("last-login")));
         this.stage = KeyStage.fromEducationLevel(j.getInt("ks"));
         this.age = j.getInt("age");
     }
 
-	//Default constructor - initalise fields and populate with blank data
+    //Default constructor - initalise fields and populate with blank data
     public UserPersonalProfile() {
         this.name = new String[]{""};
         this.birthdate = LocalDate.now();
@@ -71,7 +71,7 @@ public class UserPersonalProfile {
         this.age = 0;
     }
 
-	//BEGIN necessary getters & setters
+    //BEGIN necessary getters & setters
 
     public String[] getName() {
         return this.name;
@@ -98,6 +98,7 @@ public class UserPersonalProfile {
         }
     }
 
+    //Check if it's the user's birthday
     public boolean isBirthday() {
         if (birthdate.getMonth().compareTo(LocalDate.now().getMonth()) == 0
                 && birthdate.getDayOfMonth() == LocalDate.now().getDayOfMonth()) {
@@ -107,10 +108,11 @@ public class UserPersonalProfile {
         }
     }
 
-	//Concat name array to single string (for use in UserProfile fragment edittext)
+    //Concat name array to single string (for use in UserProfile fragment edittext)
     public String getNameAsSingleString() {
         String output = "";
 
+        //Loop through all String entries in name array, append to output
         for (String s : name) {
             output += s + " ";
         }
@@ -134,9 +136,9 @@ public class UserPersonalProfile {
         this.stage = stage;
     }
 
-	//END necessary getters & setters
+    //END necessary getters & setters
 
-	//Convert object to raw JSON form
+    //Convert object to raw JSON form
     public JSONObject toJSON() throws JSONException {
         JSONObject output = new JSONObject();
         output.put("name", getNameAsSingleString());
@@ -147,17 +149,17 @@ public class UserPersonalProfile {
         return output;
     }
 
-	//Set name based on single string - to be used with UserProfile fragment and loading EditText content
+    //Set name based on single string - to be used with UserProfile fragment and loading EditText content
     public boolean setName(String singleStringName) {
         try {
-			//Convert single string into string array, assign to name
+            //Convert single string into string array, assign to name
             String[] output = singleStringName.trim().split(" ");
             this.name = output;
         } catch (Exception e) {
-			//If an error occurs, forward issue to caller
+            //If an error occurs, forward issue to caller
             return false;
         } finally {
-			//Default return
+            //Default return
             return true;
         }
     }

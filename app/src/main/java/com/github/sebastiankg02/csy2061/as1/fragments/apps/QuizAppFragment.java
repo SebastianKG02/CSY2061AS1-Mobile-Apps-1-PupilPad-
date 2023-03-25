@@ -24,18 +24,25 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 
+/**
+ * Main Class for displaying available Quizzes - controls UI functionality for the fragment
+ */
 public class QuizAppFragment extends Fragment {
+    //RecyclerView adapter for displaying quizzes
     private static QuizAdapter adapter;
     private View masterView;
     private ViewGroup viewGroup;
+    //UI component references
     private RecyclerView recycler;
     private Button wipeButton;
     private Button backButton;
 
+    //Default constructor
     public QuizAppFragment() {
         super(R.layout.fragment_quiz_menu);
     }
 
+    //Inflate view to ensure UI components are loaded and displayed correctly
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup vg, Bundle b) {
@@ -44,11 +51,18 @@ public class QuizAppFragment extends Fragment {
         return masterView;
     }
 
+    //Set up UI functionality
     @Override
     public void onViewCreated(View v, Bundle b) {
         super.onViewCreated(v, b);
 
+        //Get reference to RecyclerView
         recycler = (RecyclerView) masterView.findViewById(R.id.quizMenuRecycler);
+        /*
+            Create adapter, populate with quizzes
+            TODO: load from files!
+            TODO: add custom quizzes!
+        */
         adapter = new QuizAdapter(new Quiz[]{
                 new Quiz("Capitals of the World", new QuizQuestion[]{
                         QuizQuestion.makeQuestion("What is the capital city of England?", new QuizAnswer[]{
@@ -65,6 +79,10 @@ public class QuizAppFragment extends Fragment {
                                 QuizAnswer.makeAnswer("True", false),
                                 QuizAnswer.makeAnswer("False", true),
                                 QuizAnswer.makeAnswer("Neither - it is a state.", false)
+                        }),
+                        QuizQuestion.makeQuestion("What is the capital of France?", new QuizAnswer[]{
+                                QuizAnswer.makeAnswer("Germany", false),
+                                QuizAnswer.makeAnswer("Paris", true)
                         })
                 }),
                 new Quiz("Maths (Addition)", new QuizQuestion[]{
@@ -87,12 +105,43 @@ public class QuizAppFragment extends Fragment {
                                 QuizAnswer.makeAnswer("0", true),
                                 QuizAnswer.makeAnswer("200", false)
                         })
+                }),
+                new Quiz("Maths (Subtraction)", new QuizQuestion[]{
+                        QuizQuestion.makeQuestion("What is 1 - 4?", new QuizAnswer[]{
+                                QuizAnswer.makeAnswer("-3", true),
+                                QuizAnswer.makeAnswer("5", false),
+                                QuizAnswer.makeAnswer("-2", false),
+                                QuizAnswer.makeAnswer("-4", false)
+                        }),
+                        QuizQuestion.makeQuestion("What is 10 - 26?", new QuizAnswer[]{
+                                QuizAnswer.makeAnswer("-10", false),
+                                QuizAnswer.makeAnswer("-16", true),
+                                QuizAnswer.makeAnswer("-36", false),
+                                QuizAnswer.makeAnswer("36", false)
+                        }),
+                        QuizQuestion.makeQuestion("What is 4 - -6?", new QuizAnswer[]{
+                                QuizAnswer.makeAnswer("7", false),
+                                QuizAnswer.makeAnswer("11", false),
+                                QuizAnswer.makeAnswer("52", false),
+                                QuizAnswer.makeAnswer("1000", false),
+                                QuizAnswer.makeAnswer("10", true)
+                        }),
+                        QuizQuestion.makeQuestion("If I have six apples, and I eat four, how many apples do I have left?", new QuizAnswer[]{
+                                QuizAnswer.makeAnswer("Two", true),
+                                QuizAnswer.makeAnswer("Six", false)
+                        }),
+                        QuizQuestion.makeQuestion("If I have 65p, and I want to buy two bananas.\nThe closest shop sells bananas for 15p each.\nHow many pence will I have left?", new QuizAnswer[]{
+                                QuizAnswer.makeAnswer("30p", false),
+                                QuizAnswer.makeAnswer("35p", true)
+                        })
                 })
         });
+        //Set recycler view options up
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recycler.setAdapter(adapter);
 
+        //Provide wipe button functionality (delete all scores for this user only)
         wipeButton = (Button) masterView.findViewById(R.id.quizWipeAllButton);
         wipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,12 +152,17 @@ public class QuizAppFragment extends Fragment {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();
                                 try {
+                                    //Loop through loaded quizzes
                                     for (Quiz q : adapter.quizzes) {
+                                        //Load certificate, update score for current user
                                         Certificate.getCertificate(q.quizName, getActivity()).setUserScore(UserAccountControl.currentLoggedInUser, 0).save(getActivity());
+                                        //Update adapter
                                         adapter.notifyDataSetChanged();
+                                        //Notify user of success
                                         Snackbar.make(view, R.string.quiz_app_menu_wipe_all_success, Snackbar.LENGTH_SHORT).show();
                                     }
                                 } catch (JSONException e) {
+                                    //Notify user of error
                                     Snackbar.make(view, R.string.quiz_app_menu_wipe_all_error, Snackbar.LENGTH_SHORT).show();
                                 }
                             }
@@ -116,6 +170,7 @@ public class QuizAppFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.cancel();
+                                //Notify user of successful cancelation
                                 Snackbar.make(view, R.string.quiz_app_menu_wipe_all_cancel, Snackbar.LENGTH_SHORT).show();
                             }
                         }).create();
@@ -123,6 +178,7 @@ public class QuizAppFragment extends Fragment {
             }
         });
 
+        //Provide back button functionality
         backButton = (Button) masterView.findViewById(R.id.quizMenuBack);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,6 +188,7 @@ public class QuizAppFragment extends Fragment {
         });
     }
 
+    //Provide reference to this class
     private Fragment getFragment() {
         return this;
     }

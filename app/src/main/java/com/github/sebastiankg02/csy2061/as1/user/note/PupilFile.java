@@ -45,8 +45,8 @@ public class PupilFile {
         this.data = new PupilNote(u, other.data);
     }
 
-    public PupilFile(String folder, String fromFile, Activity owner) throws JSONException {
-        String p = AppHelper.loadFile(folder, fromFile, owner, false, false, false, null, null).payload;
+    public PupilFile(String fromFile, Activity owner) throws JSONException {
+        String p = AppHelper.loadFile(fromFile, owner, false, false, false, null).payload;
         Log.i("NOTES", "Loaded pupil data: " + p);
         JSONObject jsonData = new JSONObject(p);
         this.owner = UUID.fromString(jsonData.getString("owner"));
@@ -63,7 +63,7 @@ public class PupilFile {
         output.path = "/" + folder + "/";
         output.initPupilNote(owner);
         output.data.fileName = folderName + ".folder.json";
-        output.save(ownerActivity, false);
+        output.save(ownerActivity);
         return output;
     }
 
@@ -73,7 +73,7 @@ public class PupilFile {
         output.path = "/" + folder + "/";
         output.initPupilNote(owner);
         output.data.fileName = fileName + ".file.json";
-        output.save(ownerActivity, false);
+        output.save(ownerActivity);
         return output;
     }
 
@@ -94,9 +94,9 @@ public class PupilFile {
         return output;
     }
 
-    public AppHelper.FileSystemReturn save(Activity owner, boolean overwrite) throws JSONException {
+    public AppHelper.FileSystemReturn save(Activity owner) throws JSONException {
         Log.e("AH", this.path + this.data.fileName);
-        return AppHelper.saveFile(this.path, this.data.fileName, getJSON().toString(), owner, null, overwrite);
+        return AppHelper.saveFile(this.path, this.data.fileName, getJSON().toString(), owner, null);
     }
 
     public void updateEditTime() {

@@ -26,14 +26,17 @@ import org.json.JSONException;
 
 public class QuizPlayFragment extends Fragment {
     public static RecyclerView recycler;
-    //Reference to global current quiz object (as loaded by QuizAppFragment)
+    //Global current quiz object (as loaded by QuizAppFragment)
     public static Quiz currentQuiz;
-    //Reference to current loaded question (as loaded internally)
+    //Global current loaded question (as loaded internally)
     public static QuizQuestion currentQuestion;
-    //Reference to current question ID
+    //Global current question ID
     public static int currentQuestionID;
+    //Global amount of correct questions
     public static int currentQuestionAnswersCorrect = 0;
+    //Persistent reference to adapter
     private static QuizQuestionAdapter adapter;
+    //References to UI elements -------------------------------------
     private static TextView questionID;
     private static TextView quizQuestion;
     private View masterView;
@@ -41,15 +44,18 @@ public class QuizPlayFragment extends Fragment {
     private Button exitButton;
     private Button nextButton;
 
+    //Default constructor
     public QuizPlayFragment() {
         super(R.layout.fragment_quiz_play);
     }
 
+    //Global method used by QuizQuestionAdapter to update question elements within this fragment
     public static void updateQuestion(String q, int c) {
         questionID.setText("Question " + String.valueOf(c) + " out of " + String.valueOf(currentQuiz.questions.size()));
         quizQuestion.setText(q);
     }
 
+    //Inflate view to ensure UI components are loaded and displayed correctly
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup vg, Bundle b) {
@@ -58,48 +64,63 @@ public class QuizPlayFragment extends Fragment {
         return masterView;
     }
 
+    //Set up UI functionality
     @Override
     public void onViewCreated(View v, Bundle b) {
         super.onViewCreated(v, b);
 
+        //Load UI element references from Fragment
         questionID = (TextView) masterView.findViewById(R.id.quizPlayID);
         quizQuestion = (TextView) masterView.findViewById(R.id.quizPlayQuestion);
         exitButton = (Button) masterView.findViewById(R.id.quizPlayBack);
         recycler = (RecyclerView) masterView.findViewById(R.id.quizPlayRecycler);
         nextButton = (Button) masterView.findViewById(R.id.quizPlayNext);
 
+        //Set currentQuestion from quiz
         currentQuestion = currentQuiz.questions.get(currentQuestionID);
+        //Create QuizQuestionAdapter and populate with question
         adapter = new QuizQuestionAdapter(currentQuestion.answers);
 
+        //Set up recyclerView, apply adapter
         recycler.setHasFixedSize(true);
         recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recycler.setAdapter(adapter);
 
+        //Update question contents
         questionID.setText("Question " + String.valueOf(currentQuestionID + 1) + " out of " + String.valueOf(currentQuiz.questions.size()));
         quizQuestion.setText(currentQuestion.question);
 
+        //Provide exit button functionality
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Create AlertDialog
                 AlertDialog dialog = AppHelper.createAlertDialogBuilder(getContext(), R.string.notes_edit_exit_dialog_title, R.string.quiz_app_play_exit_dialog_desc)
                         .setPositiveButton(R.string.notes_edit_exit_dialog_save_exit, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();
                                 try {
+                                    //Save current questions in certificate
                                     Certificate.getCertificate(currentQuiz.quizName, getActivity()).setUserScore(UserAccountControl.currentLoggedInUser, currentQuestionAnswersCorrect);
+                                    //Inform user of success
                                     Snackbar.make(view, R.string.quiz_app_play_exit_score_saved, Snackbar.LENGTH_SHORT).show();
+                                    //Exit to QuizApp
                                     AppHelper.back(getFragment());
                                 } catch (JSONException e) {
+                                    //Inform user of error
                                     Snackbar.make(view, R.string.quiz_app_play_exit_score_error, Snackbar.LENGTH_SHORT).show();
+                                    //Exit to QuizApp
                                     AppHelper.back(getFragment());
                                 }
                             }
                         }).setNegativeButton(R.string.notes_edit_exit_dialog_exit_only, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+                                //Inform user of success in not saving
                                 Snackbar.make(view, R.string.quiz_app_play_exit_score_no_save, Snackbar.LENGTH_SHORT).show();
                                 dialogInterface.cancel();
+                                //Exit to QuizApp
                                 AppHelper.back(getFragment());
                             }
                         }).create();
@@ -107,6 +128,7 @@ public class QuizPlayFragment extends Fragment {
             }
         });
 
+        //Provide next question button functionality
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,21 +141,27 @@ public class QuizPlayFragment extends Fragment {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     dialogInterface.dismiss();
-                                    //Save user score and go back to quiz app
+                                    //Save user score and go back to quiz app (load certificate)
                                     try {
                                         Certificate.getCertificate(currentQuiz.quizName, getActivity()).setUserScore(UserAccountControl.currentLoggedInUser, currentQuestionAnswersCorrect).save(getActivity());
+                                        //Inform user of success
                                         Snackbar.make(view, R.string.quiz_app_play_exit_score_saved, Snackbar.LENGTH_SHORT).show();
+                                        //Exit back to QuizApp
                                         AppHelper.back(getFragment());
                                     } catch (JSONException e) {
+                                        //Inform user of error
                                         Snackbar.make(view, R.string.quiz_app_play_exit_score_error, Snackbar.LENGTH_SHORT).show();
+                                        //Exit back to QuizApp
                                         AppHelper.back(getFragment());
                                     }
                                 }
                             }).setNegativeButton(R.string.quiz_app_question_dialog_exit_only, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
+                                    //Inform user of score being not saved
                                     Snackbar.make(view, R.string.quiz_app_play_exit_score_no_save, Snackbar.LENGTH_SHORT).show();
                                     dialogInterface.cancel();
+                                    //Exit back to QuizApp
                                     AppHelper.back(getFragment());
                                 }
                             }).create();
@@ -145,6 +173,7 @@ public class QuizPlayFragment extends Fragment {
         });
     }
 
+    //Method that checks for answer correctness
     private void checkAnswer() {
         //Check if user has made selection
         if (adapter.hasSelected) {
@@ -157,12 +186,15 @@ public class QuizPlayFragment extends Fragment {
                 //If not, inform user of incorrect choice
                 Snackbar.make(masterView, R.string.quiz_app_play_incorrect, Snackbar.LENGTH_SHORT).show();
             }
+
+            //If there is a next question
             if (currentQuestionID != currentQuiz.questions.size() - 1) {
                 //Push next question to adapter
                 currentQuestionID += 1;
                 currentQuestion = currentQuiz.questions.get(currentQuestionID);
                 adapter.answers = currentQuestion.answers;
                 adapter.hasSelected = false;
+                //Force adapter to update its' data set
                 adapter.notifyDataSetChanged();
             }
 
@@ -172,6 +204,7 @@ public class QuizPlayFragment extends Fragment {
         }
     }
 
+    //Provide reference to this class
     private Fragment getFragment() {
         return this;
     }

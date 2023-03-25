@@ -65,7 +65,7 @@ public class PupilFileAdapter extends RecyclerView.Adapter<PupilFileAdapter.View
                         try {
                             //Load the file
                             Log.i("NOTES", "Loading: " + currentDirectory + "/" + allFilesInDir[i].getName());
-                            files.add(new PupilFile(currentDirectory + "\\", owner.getFilesDir() + "/" + currentDirectory + "/" + allFilesInDir[i].getName(), owner));
+                            files.add(new PupilFile(owner.getFilesDir() + "/" + currentDirectory + "/" + allFilesInDir[i].getName(), owner));
                             //If user is not owner, remove this file from list of viewable files
                             if (!files.get(files.size() - 1).getOwner().equals(currentUser.getId())) {
                                 files.remove(files.size() - 1);

@@ -2,6 +2,9 @@ package com.github.sebastiankg02.csy2061.as1.user;
 
 import com.github.sebastiankg02.csy2061.as1.R;
 
+/**
+ * Simple enum containing logic and display information for student education stages
+ */
 public enum KeyStage {
     RECEPTION(0,
             R.string.ks_reception_long,
@@ -44,6 +47,7 @@ public enum KeyStage {
             R.string.ks_none_short
     );
 
+    //Simple array of all KeyStage values, used in sorting and converting
     public static final KeyStage[] all = {
             RECEPTION,
             KEY_STAGE_1,
@@ -57,28 +61,32 @@ public enum KeyStage {
             GUEST
     };
 
+    //Internal variables
     private int educationLevel;
     private int educationTag_Long;
     private int educationTag_Short;
 
-    private KeyStage(int level, int tag_Long, int tag_Short) {
+    //Enum constructor
+    KeyStage(int level, int tag_Long, int tag_Short) {
         this.educationLevel = level;
         this.educationTag_Long = tag_Long;
         this.educationTag_Short = tag_Short;
     }
 
-    ;
-
+    //Construct KeyStage from integer (used in JSON serialization)
     public static KeyStage fromEducationLevel(int level) {
-        for (KeyStage ks :
-                all) {
+        //Loop through all possible KeyStage values
+        for (KeyStage ks : all) {
+            //When match found, return match
             if (ks.educationLevel == level) {
                 return ks;
             }
         }
+        //If no match found, return null
         return null;
     }
 
+    //BEGIN Getters ----------------------------------------------------- END
     public int getEducationLevel() {
         return this.educationLevel;
     }
@@ -86,9 +94,5 @@ public enum KeyStage {
     public int getLongEducationTag() {
         return this.educationTag_Long;
     }
-
-    public int getShortEducationTag() {
-        return this.educationTag_Short;
-    }
-
+    //END Getters ------------------------------------------------------- END
 }

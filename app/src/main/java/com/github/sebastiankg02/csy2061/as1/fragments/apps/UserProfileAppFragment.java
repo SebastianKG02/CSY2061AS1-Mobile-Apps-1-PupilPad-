@@ -16,20 +16,18 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class UserProfileAppFragment extends Fragment {
-
+    //References to UI elements
     private LinearLayout masterLayout;
-
     private TextInputEditText fullNameField;
     private TextInputEditText birthdateField;
     private Button saveProfileButton;
-
     private TextInputEditText currentPasswordField;
     private TextInputEditText newPasswordField;
     private TextInputEditText confirmNewPasswordField;
     private Button setNewPasswordButton;
-
     private Button backButton;
 
+    //Default constructor
     public UserProfileAppFragment() {
         super(R.layout.fragment_user_profile);
     }
@@ -95,10 +93,12 @@ public class UserProfileAppFragment extends Fragment {
             }
         });
 
+        //Get references to new password UI elements
         currentPasswordField = (TextInputEditText) this.getActivity().findViewById(R.id.currentPWInputField);
         newPasswordField = (TextInputEditText) this.getActivity().findViewById(R.id.newPWInputField);
         confirmNewPasswordField = (TextInputEditText) this.getActivity().findViewById(R.id.confirmPWInputField);
 
+        //Provide savePassword button functionality
         setNewPasswordButton = (Button) this.getActivity().findViewById(R.id.saveNewPassword);
         setNewPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,11 +155,13 @@ public class UserProfileAppFragment extends Fragment {
 
     }
 
+    //Provide reference to this class
     private Fragment getFragment() {
         return this;
     }
 
-    public void createFragmentAlertDialog(int title, int message, int okID) {
+    //Create AlertDialog without reference to this fragment, used internally
+    private void createFragmentAlertDialog(int title, int message, int okID) {
         createAlertDialog(this, title, message, okID);
     }
 }
