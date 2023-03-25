@@ -87,7 +87,7 @@ public class AppHelper {
                     sb.append(line);
                     line = reader.readLine();
                 } while (line != null);
-
+				
                 //Final output String
                 line = sb.toString();
                 //Ensure streams are closed
@@ -115,7 +115,7 @@ public class AppHelper {
                     //Ensure file is really deleted
                     fileToLoad.delete();
                     //Create new file
-                    if (fileToLoad.createNewFile()) {
+                    if (fileToLoad.createNewFile()){
                         //Populate file contents if needed
                         if (updateFileIfCreated) {
                             if (creationPayload == null) {
@@ -134,10 +134,7 @@ public class AppHelper {
                 }
             }
         } catch (Exception e) {
-            //General error catching
-            Log.e("AH", "FileSystem error: " + e.getMessage());
-            throw new RuntimeException(e);
-            //return FileSystemReturn.ERROR.setPayload("Error loading [" + path + "]" + e.getMessage());
+            return FileSystemReturn.ERROR.setPayload("Error loading [" + path + "]" + e.getMessage());
         }
         return FileSystemReturn.ERROR.setPayload("Unexpected behaviour");
     }
@@ -174,10 +171,7 @@ public class AppHelper {
                 return FileSystemReturn.FILE_SAVED;
             }
         } catch (Exception e) {
-            Log.e("AH", "FileSystem error: " + e.getMessage());
-            Log.e("AH", "Debug Info Payload: " + owner.getFilesDir() + path + file + " {" + payload + "}");
-            throw new RuntimeException(e);
-            //return FileSystemReturn.ERROR.setPayload(e.getMessage());
+            return FileSystemReturn.ERROR.setPayload(e.getMessage());
         }
     }
 

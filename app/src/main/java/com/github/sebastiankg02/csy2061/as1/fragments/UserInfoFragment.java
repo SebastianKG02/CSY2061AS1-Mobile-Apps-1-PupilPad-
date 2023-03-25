@@ -37,7 +37,6 @@ public class UserInfoFragment extends Fragment {
     @Override
     public void onViewCreated(View v, Bundle b) {
         super.onViewCreated(v, b);
-        Log.i("UPI", "Updating Fields..");
         userFullNameField = (TextView) masterView.findViewById(R.id.userFullName);
         userStageInfoField = (TextView) masterView.findViewById(R.id.userStageRole);
 
