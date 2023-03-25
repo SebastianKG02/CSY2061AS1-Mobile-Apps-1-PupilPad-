@@ -70,7 +70,7 @@ public class AppHelper {
         try {
             //Create file instance
             File fileToLoad = new File(path);
-            Log.i("AH", "Loading file: " + fileToLoad.getName());
+            Log.i("AH", "Loading file: " + path + "[" + fileToLoad.getName() + "]");
             //Check if file exists
             if (fileToLoad.exists()) {
                 //Build input streams
@@ -106,7 +106,7 @@ public class AppHelper {
                             return saveFile("", path, creationPayload, owner, FileSystemReturn.FILE_PRESENT_EMPTY_UPDATED, true);
                         }
                     } else {
-                        return FileSystemReturn.FILE_PRESENT_EMPTY.setPayload(line);
+                        return FileSystemReturn.FILE_PRESENT_EMPTY.setPayload("");
                     }
                 }
             } else {

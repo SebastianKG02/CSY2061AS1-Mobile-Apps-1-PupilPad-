@@ -50,7 +50,7 @@ public class NotesEditorFragment extends Fragment {
         saveButton = (Button) masterView.findViewById(R.id.saveButton);
         backButton = (Button) masterView.findViewById(R.id.notesEditorExit);
 
-        filePath.setText(currentFile.getPath() + "/" + currentFile.getFileName() + "\t[" + currentFile.getDisplayName() + "]");
+        filePath.setText(currentFile.getPath() + currentFile.getFileName() + "\t[" + currentFile.getDisplayName() + "]");
         fileTitle.setText(currentFile.getTitle());
         editor.setText(currentFile.getContents());
 

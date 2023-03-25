@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/quizQuestionItemLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,13 +8,6 @@
     android:elevation="10dp"
     android:orientation="horizontal"
     android:padding="5dp">
-
-    <ImageView
-        android:id="@+id/noteIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        app:srcCompat="@android:drawable/ic_input_get" />
 
     <LinearLayout
         android:id="@+id/quizQuestionTextLayout"
@@ -26,29 +18,21 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/itemFileName"
+            android:id="@+id/quizItemBestScore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:text="FILE NAME (CREATION DATE)"
-            android:textSize="10dp"
-            android:textStyle="italic" />
+            android:text="USER SCORE: 1/10"
+            android:textSize="10dp" />
 
         <TextView
-            android:id="@+id/itemDisplayName"
+            android:id="@+id/quizItemName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ITEM DISPLAY NAME"
+            android:text="QUIZ DISPLAY NAME"
             android:textSize="16dp"
             android:textStyle="bold" />
 
     </LinearLayout>
-
-    <ImageButton
-        android:id="@+id/deleteItemButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:cropToPadding="false"
-        app:srcCompat="@android:drawable/ic_delete" />
 
 </LinearLayout>

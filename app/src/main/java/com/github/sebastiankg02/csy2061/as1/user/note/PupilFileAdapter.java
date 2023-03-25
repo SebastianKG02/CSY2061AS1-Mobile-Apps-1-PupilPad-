@@ -10,7 +10,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -109,49 +108,61 @@ public class PupilFileAdapter extends RecyclerView.Adapter<PupilFileAdapter.View
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Create confirmation dialog
                 AlertDialog deleteDialog = AppHelper.createAlertDialogBuilder(view.getContext(), currentFile.type.deleteDialogTitle, currentFile.type.deleteDialogDesc)
                         .setPositiveButton(currentFile.type.deleteTag, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                                //Create reference to actual file to be deleted
                                 File toDelete = new File(view.getContext().getFilesDir(), currentFile.getPath() + currentFile.getFileName());
+                                //Check if file exists
                                 if (toDelete.exists()) {
+                                    //Try to delete file
                                     if (toDelete.delete()) {
+                                        //If success, inform user
                                         Snackbar.make(view, currentFile.type.deleteSuccess, Snackbar.LENGTH_SHORT).show();
                                     } else {
-                                        Snackbar.make(view, currentFile.type.deleteFail, Snackbar.LENGTH_LONG).show();
+                                        //If error, inform user
+                                        Snackbar.make(view, currentFile.type.deleteFail, Snackbar.LENGTH_SHORT).show();
                                     }
                                 } else {
-                                    Snackbar.make(view, currentFile.type.deleteFail, Snackbar.LENGTH_LONG).show();
+                                    //If it doesn't, inform user of error.
+                                    Snackbar.make(view, currentFile.type.deleteFail, Snackbar.LENGTH_SHORT).show();
                                 }
+                                //Remove file and update adapter contents
                                 files.remove(currentFile);
                                 notifyDataSetChanged();
                             }
                         }).setNegativeButton(currentFile.type.cancelTag, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                Toast.makeText(view.getContext(), currentFile.type.cancelSuccessTag, Toast.LENGTH_LONG).show();
+                                //if user cancels delete, inform of success
+                                dialogInterface.cancel();
+                                Snackbar.make(view, currentFile.type.cancelSuccessTag, Snackbar.LENGTH_LONG).show();
                             }
                         }).create();
                 deleteDialog.show();
             }
         });
 
+        //Set up click on recyclerview entry logic
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "TODO: Implement this!", Toast.LENGTH_SHORT).show();
                 switch (currentFile.type) {
                     case FILE:
+                        //If entry is FILE, load file into the editor and move to the editor fragment
                         NotesEditorFragment.currentFile = new PupilFile(UserAccountControl.currentLoggedInUser, currentFile);
                         AppHelper.moveToFragment(NotesEditorFragment.class, null);
                         break;
                     case FOLDER:
                         //Get folder path from file JSON
-                        Log.i("AH", "Attempting to move to new folder: " + currentFile.getFileName().split("\\.").length);
                         String newPathAddition = currentFile.getFileName().split("\\.")[0];
+
                         NotesAppFragment.currentPath += "/" + newPathAddition;
                         currentDirectory = NotesAppFragment.currentPath;
-                        Log.i("AH", "Entering new folder! [" + NotesAppFragment.currentPath + "]");
+
                         NotesAppFragment.updateAdapter();
                         break;
                     case NONE:
@@ -179,7 +190,7 @@ public class PupilFileAdapter extends RecyclerView.Adapter<PupilFileAdapter.View
             this.itemDisplayName = (TextView) v.findViewById(R.id.itemDisplayName);
             this.itemFileName = (TextView) v.findViewById(R.id.itemFileName);
             this.deleteButton = (ImageButton) v.findViewById(R.id.deleteItemButton);
-            this.itemLayout = (LinearLayout) v.findViewById(R.id.noteItemLayout);
+            this.itemLayout = (LinearLayout) v.findViewById(R.id.quizQuestionItemLayout);
         }
     }
 }

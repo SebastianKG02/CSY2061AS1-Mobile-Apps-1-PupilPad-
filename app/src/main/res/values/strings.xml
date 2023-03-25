@@ -144,4 +144,24 @@
     <string name="notes_edit_exit_dialog_exit_only">Exit Anyway</string>
     <string name="notes_edit_save_success">File saved successfully.</string>
     <string name="notes_edit_save_error">Could not save file! Please try again.</string>
+    <string name="quiz_app_delete_progress">Wipe Quiz</string>
+    <string name="quiz_app_question_next">Next Question</string>
+    <string name="quiz_app_question_dialog_title">Quiz Complete!</string>
+    <string name="quiz_app_question_dialog_save_exit">Save score &amp; Exit</string>
+    <string name="quiz_app_question_dialog_exit_only">Exit without saving</string>
+    <string name="quiz_app_question_exit">Exit Quiz</string>
+    <string name="quiz_app_menu_wipe_all_title">Wipe all scores?</string>
+    <string name="quiz_app_menu_wipe_all_desc">This will permanently delete ALL of your saved scores!\nThis cannot be undone.</string>
+    <string name="quiz_app_menu_wipe_all_ok">Wipe anyway</string>
+    <string name="quiz_app_menu_wipe_all_success">All of your scores have been wiped.</string>
+    <string name="quiz_app_menu_wipe_all_error">Could not wipe your scores. Please try again later.</string>
+    <string name="quiz_app_menu_wipe_all_cancel">Scores not wiped.</string>
+    <string name="quiz_app_play_exit_dialog_desc">Any answered questions will be lost!</string>
+    <string name="quiz_app_play_exit_score_no_save">Your score has not been saved.</string>
+    <string name="quiz_app_play_exit_score_saved">Quiz Score saved!</string>
+    <string name="quiz_app_play_exit_score_error">Could not save quiz score.</string>
+    <string name="quiz_app_play_next_question">Next Question</string>
+    <string name="quiz_app_play_correct">Correct answer!</string>
+    <string name="quiz_app_play_incorrect">Incorrect answer.</string>
+    <string name="quiz_app_play_no_choice">You need to select your answer before continuing to the next question!</string>
 </resources>

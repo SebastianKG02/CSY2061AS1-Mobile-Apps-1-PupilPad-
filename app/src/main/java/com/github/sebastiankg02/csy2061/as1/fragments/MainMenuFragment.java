@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import com.github.sebastiankg02.csy2061.as1.R;
 import com.github.sebastiankg02.csy2061.as1.fragments.apps.AppHelper;
 import com.github.sebastiankg02.csy2061.as1.fragments.apps.NotesAppFragment;
+import com.github.sebastiankg02.csy2061.as1.fragments.apps.QuizAppFragment;
 import com.github.sebastiankg02.csy2061.as1.fragments.apps.UserProfileAppFragment;
 import com.github.sebastiankg02.csy2061.as1.user.UserAccountControl;
 
@@ -81,6 +82,13 @@ public class MainMenuFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 AppHelper.moveToFragment(NotesAppFragment.class, null);
+            }
+        });
+
+        quizButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppHelper.moveToFragment(QuizAppFragment.class, null);
             }
         });
     }

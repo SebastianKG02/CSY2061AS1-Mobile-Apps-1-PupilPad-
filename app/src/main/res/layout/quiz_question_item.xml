@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/quizQuestionItemLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@drawable/notes_item_border"
+    android:elevation="10dp"
+    android:orientation="horizontal"
+    android:padding="5dp">
+
+    <LinearLayout
+        android:id="@+id/quizQuestionTextLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="2.5dp"
+        android:layout_weight="100"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/quizQuestionRadio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="QUESTION ANSWER TEXT" />
+
+    </LinearLayout>
+
+</LinearLayout>
