@@ -24,6 +24,8 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 
+import java.util.Arrays;
+
 /**
  * Main Class for displaying available Quizzes - controls UI functionality for the fragment
  */
@@ -133,6 +135,34 @@ public class QuizAppFragment extends Fragment {
                         QuizQuestion.makeQuestion("If I have 65p, and I want to buy two bananas.\nThe closest shop sells bananas for 15p each.\nHow many pence will I have left?", new QuizAnswer[]{
                                 QuizAnswer.makeAnswer("30p", false),
                                 QuizAnswer.makeAnswer("35p", true)
+                        })
+                }),
+                new Quiz("Computer Science - Data Types", new QuizQuestion[]{
+                        QuizQuestion.makeQuestion("What is a boolean?", new QuizAnswer[]{
+                                QuizAnswer.makeAnswer("A simple value that can only be true or false", true),
+                                QuizAnswer.makeAnswer("A simple value that can only be 1 or 0", false)
+                        }),
+                        QuizQuestion.makeQuestion("Is the number 7 most likely an integer or a float?", new QuizAnswer[]{
+                                QuizAnswer.makeAnswer("An integer", true),
+                                QuizAnswer.makeAnswer("A float", false)
+                        }),
+                        QuizQuestion.makeQuestion("How many bits are in a byte?", new QuizAnswer[]{
+                                QuizAnswer.makeAnswer("4", false),
+                                QuizAnswer.makeAnswer("16", false),
+                                QuizAnswer.makeAnswer("8", true),
+                                QuizAnswer.makeAnswer("2", false),
+                                QuizAnswer.makeAnswer("10", false),
+                                QuizAnswer.makeAnswer("32", false)
+                        }),
+                        QuizQuestion.makeQuestion("What is a signed integer?", new QuizAnswer[]{
+                                QuizAnswer.makeAnswer("A number that has been signed by a famous person", false),
+                                QuizAnswer.makeAnswer("A whole number that can either be positive or negative in value", true),
+                                QuizAnswer.makeAnswer("Any number", false)
+                        }),
+                        QuizQuestion.makeQuestion("What is an unsigned integer?", new QuizAnswer[]{
+                                QuizAnswer.makeAnswer("A whole number that can only be positive in value", true),
+                                QuizAnswer.makeAnswer("A number that has not been signed by a famous person yet", false),
+                                QuizAnswer.makeAnswer("A value that can either be a whole number or a floating-point number", false)
                         })
                 })
         });
